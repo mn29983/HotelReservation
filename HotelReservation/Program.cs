@@ -31,7 +31,11 @@ namespace HotelReservation
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
-            Hello world
+            Hello world;
+
+            Napraj restart na diskord
+                pa da zborime jebote
+                
         }
     }
 }
