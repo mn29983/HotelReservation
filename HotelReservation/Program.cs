@@ -32,9 +32,6 @@ namespace HotelReservation
 
             app.Run();
             Hello world;
-
-            Napraj restart na diskord
-                pa da zborime jebote
                 
         }
     }
