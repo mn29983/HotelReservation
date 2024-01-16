@@ -1,0 +1,23 @@
+﻿@model IEnumerable<HotelReservation.Models.Room>
+@{
+    ViewBag.Title = "Rooms List";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var room in Model)
+        {
+            <tr>
+                <td>@room.RoomNumber</td>
+
+                <td>@room.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>
