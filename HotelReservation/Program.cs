@@ -3,10 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using HotelReservation.Models;
 using Microsoft.OpenApi.Models;
-using HotelReservation.Repositories.Implementations;
-using HotelReservation.Repositories.Interfaces;
-using HotelReservation.Services.Implementations;
-using HotelReservation.Services.Interfaces;
 
 namespace HotelReservation
 {
@@ -18,7 +14,6 @@ namespace HotelReservation
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
 
 
             //We add this so we can use the configuration made in appsettings.json
@@ -37,9 +32,6 @@ namespace HotelReservation
              .AddEntityFrameworkStores<ApplicationDbContext>()
              .AddDefaultTokenProviders();
 
-            builder.Services.AddScoped<IRepository<Room>, Repository<Room>>();
-
-            builder.Services.AddScoped<IRoomService, RoomService>();
 
             builder.Services.AddSwaggerGen(c =>
             {

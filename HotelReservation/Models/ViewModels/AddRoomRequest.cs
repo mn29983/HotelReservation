@@ -1,8 +1,7 @@
-﻿namespace HotelReservation.Models
+﻿namespace HotelReservation.Models.ViewModels
 {
-    public class Room
+    public class AddRoomRequest
     {
-        public Guid Id { get; set; }
         public string RoomNumber { get; set; }
         public string Type { get; set; }
         public string Description { get; set; }
@@ -14,6 +13,5 @@
         public List<string> Pictures { get; set; }
 
         public bool Available { get; set; }
-
     }
 }
