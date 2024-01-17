@@ -16,15 +16,6 @@ namespace HotelReservation.Controllers
             _roomService = roomService;
         }
 
-
-        //[HttpGet]
-        //public IActionResult AllRooms()
-        //{
-        //    // Your action logic...
-        //    return View();
-        //}
-
-
         [HttpGet]
         public async Task<IActionResult> AllRooms()
         {

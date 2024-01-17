@@ -3,21 +3,18 @@
     ViewBag.Title = "Rooms List";
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var room in Model)
-        {
-            <tr>
-                <td>@room.RoomNumber</td>
-
-                <td>@room.Price</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="card-deck">
+    @foreach (var room in Model)
+    {
+        <div class="card">
+            <img src="placeholder-image-url.jpg" class="card-img-top" alt="Room Image">
+            <div class="card-body">
+                <h5 class="card-title">@room.RoomNumber</h5>
+                <p class="card-text">Type: @room.Type</p>
+                <p class="card-text">Capacity: @room.Capacity</p>
+                <p class="card-text">Price: @room.Price</p>
+                <p class="card-text">Available: @(room.Available ? "Yes" : "No")</p>
+            </div>
+        </div>
+    }
+</div>

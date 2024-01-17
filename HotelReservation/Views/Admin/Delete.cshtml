@@ -1,0 +1,17 @@
+﻿@model HotelReservation.Models.Room
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this room?</h3>
+<div>
+    <h4>Room ID: @Model.Id</h4>
+    <h4>Room Number: @Model.RoomNumber</h4>
+    <h4>Type: @Model.Type</h4>
+    <h4>Capacity: @Model.Capacity</h4>
+    <h4>Price: @Model.Price</h4>
+</div>
+
+<form asp-controller="Admin" asp-action="DeleteConfirmed" asp-route-id="@Model.Id" method="post">
+    <input type="submit" value="Delete" class="btn btn-danger" />
+    <a asp-action="allroom">Back to List</a>
+</form>

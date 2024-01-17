@@ -98,13 +98,12 @@ public class AccountController : Controller
 
             if (result.Succeeded)
             {
-                if (!string.IsNullOrEmpty(ReturnUrl) && Url.IsLocalUrl(ReturnUrl))
-                {
-                    var user = await _userManager.FindByEmailAsync(model.Email);
-                    var roles = await _userManager.GetRolesAsync(user);
-                    var claims = User.Claims;
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                var roles = await _userManager.GetRolesAsync(user);
 
-                    return Redirect(ReturnUrl);
+                if (roles.Contains("Admin"))
+                {
+                    return RedirectToAction("Index", "Admin");
                 }
                 else
                 {

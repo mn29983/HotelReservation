@@ -1,0 +1,37 @@
+﻿@model AdminDashboardViewModel
+
+<h3>Add Room</h3>
+
+@using (Html.BeginForm("CreateRoom", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label asp-for="NewRoom.RoomNumber"></label>
+        <input asp-for="NewRoom.RoomNumber" class="form-control" />
+        <span asp-validation-for="NewRoom.RoomNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NewRoom.Type"></label>
+        <input asp-for="NewRoom.Type" class="form-control" />
+        <span asp-validation-for="NewRoom.Type" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NewRoom.Capacity"></label>
+        <input asp-for="NewRoom.Capacity" class="form-control" />
+        <span asp-validation-for="NewRoom.Capacity" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NewRoom.Price"></label>
+        <input asp-for="NewRoom.Price" class="form-control" />
+        <span asp-validation-for="NewRoom.Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NewRoom.Available"></label>
+        <input asp-for="NewRoom.Available" class="form-control" />
+        <span asp-validation-for="NewRoom.Available" class="text-danger"></span>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Create</button>
+}

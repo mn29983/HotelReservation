@@ -1,13 +1,14 @@
-﻿using System;
+﻿using HotelReservation.Models;
+using System;
 namespace HotelReservation.Repositories.Interfaces
 {
     public interface IRepository<T> where T : class
     {
         Task<IEnumerable<T>> GetAllAsync();
-        Task<T> GetById(int id);
-        Task Add(T entity);
-        Task Update(T entity);
-        Task Delete(int id);
+        Task<T> GetByIdAsync(int id);
+        Task AddAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(int id);
     }
 }
 

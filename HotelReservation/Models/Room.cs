@@ -11,6 +11,8 @@
 
         public decimal Price { get; set; }
 
+        public List<string> Pictures { get; set; }
+
         public bool Available { get; set; }
 
     }
