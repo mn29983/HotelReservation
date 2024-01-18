@@ -33,6 +33,10 @@ namespace HotelReservation
              .AddDefaultTokenProviders();
 
 
+            builder.Services.AddAuthorization();
+
+            builder.Services.AddControllersWithViews();
+
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });

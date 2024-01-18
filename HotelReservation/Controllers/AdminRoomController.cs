@@ -1,11 +1,11 @@
 ﻿using HotelReservation.Models.ViewModels;
-using HotelReservation.Migrations;
 using Microsoft.AspNetCore.Mvc;
 using HotelReservation.Models;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HotelReservation.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminRoomController : Controller
     {
         private readonly ApplicationDbContext dbContext;

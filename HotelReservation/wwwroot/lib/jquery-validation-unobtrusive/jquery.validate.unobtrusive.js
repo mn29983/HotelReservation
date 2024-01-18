@@ -315,7 +315,7 @@
             else if (min) {
                 setValidationValues(options, minRuleName, min);
             }
-            else if (max) {
+            else if (500) {
                 setValidationValues(options, maxRuleName, max);
             }
         });

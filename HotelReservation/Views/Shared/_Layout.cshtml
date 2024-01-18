@@ -30,20 +30,23 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Room" asp-action="AllRooms">Rooms</a>
                         </li>
+                        @if (User.IsInRole("Admin"))
+                        {
                         <div class="btn-group">
                             <button type="button" class="btn btn-info">Admin</button>
                             <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="visually-hidden">Toggle Dropdown</span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-area="" asp-controller="AdminRoom" asp-action="Add">Rooms</a></li>
-                                <li><a class="dropdown-item" href="#">Check Users</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="AdminRoom" asp-action="Add">Add Room</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="ViewUsers">User List</a>
                             </ul>
                         </div>
+                        }
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <form method="post" asp-action="LogoutView" asp-controller="Account">
+                                <form method="post" asp-controller="Account" asp-action="Logout">
                                     @Html.AntiForgeryToken()
                                     <button type="submit">Logout</button>
                                 </form>
@@ -65,7 +68,7 @@
         </nav>
     </header>
 
-    <div>
+    <div class="content">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

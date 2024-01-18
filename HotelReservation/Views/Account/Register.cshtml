@@ -1,39 +1,60 @@
-﻿@model HotelReservation.Models.Requests.RegisterViewModel
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model HotelReservation.Models.ViewModels.RegisterViewModel
 @{
     ViewData["Title"] = "Register";
 }
 
 <h2>@ViewData["Title"]</h2>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post))
-{
+<form asp-action="Register" method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Email)
-        @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        <label asp-for="Username"></label>
+        <input asp-for="Username" class="form-control" />
+        <span asp-validation-for="Username" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Password)
-        @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.ConfirmPassword)
-        @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.UserRole)
-        @Html.DropDownListFor(model => model.UserRole, Model.UserRoleList, "Select a role", new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.UserRole, "", new { @class = "text-danger" })
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
     </div>
 
+    <div class="form-group">
+        <label asp-for="SelectedRole" class="control-label"></label>
+        <select asp-for="SelectedRole" class="form-control" asp-items="Model.AvailableRoles"></select>
+        <span asp-validation-for="SelectedRole" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" type="password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ConfirmPassword"></label>
+        <input asp-for="ConfirmPassword" type="password" class="form-control" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
 
 
     <button type="submit" class="btn btn-primary">Register</button>
-}
+</form>
