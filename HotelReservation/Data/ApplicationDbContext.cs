@@ -9,14 +9,19 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         : base(options)
     {
     }
+
+    public DbSet<Room> Rooms { get; set; }
+    public DbSet<Reservation> Reservations { get; set; }
+    public DbSet<User> Users { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<Reservation>()
+            .HasOne(r => r.Room)
+            .WithMany(room => room.Reservations)
+            .HasForeignKey(r => r.RoomId);
     }
-
-public DbSet<Room> Rooms { get; set; }
-    public DbSet<Reservation> Reservations { get; set; }
-    public DbSet<User> Users { get; set; }
 
 }

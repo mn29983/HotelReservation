@@ -1,0 +1,20 @@
+﻿@model List<Room>
+
+<!-- Button for adding a new room -->
+<div class="mt-3">
+    <a asp-action="Add" class="btn btn-success">Add New Room</a>
+</div>
+<!-- Display rooms -->
+@foreach (var room in Model)
+{
+    <div>
+        <h3>Room: @room.RoomNumber</h3>
+        <p>Type: @room.Type</p>
+        <p>Description: @room.Description</p>
+        <p>Capacity: @room.Capacity</p>
+        <p>Price: @room.Price</p>
+
+        <!-- Button for editing each room -->
+        <a asp-action="Edit" asp-route-id="@room.Id" class="btn btn-primary">Edit</a>
+    </div>
+}

@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using HotelReservation.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace HotelReservation.Controllers
 {
@@ -15,7 +17,12 @@ namespace HotelReservation.Controllers
             this.dbContext = dbContext;
         }
 
-
+        [HttpGet]
+        public IActionResult Index()
+        {
+            var rooms = dbContext.Rooms.ToList(); // Retrieve the list of rooms from your database
+            return View(rooms);
+        }
 
         [HttpGet]
         public IActionResult Add()
@@ -26,21 +33,83 @@ namespace HotelReservation.Controllers
         [HttpPost]
         public IActionResult Add(AddRoomRequest addRoomRequest)
         {
-            var room = new Room
+            if (ModelState.IsValid)
             {
-                RoomNumber = addRoomRequest.RoomNumber,
-                Type = addRoomRequest.Type,
-                Description = addRoomRequest.Description,
-                Capacity = addRoomRequest.Capacity,
-                Price = addRoomRequest.Price,
-                Pictures = addRoomRequest.Pictures,
-                Available = addRoomRequest.Available,
+                var room = new Room
+                {
+                    RoomNumber = addRoomRequest.RoomNumber,
+                    Type = addRoomRequest.Type,
+                    Description = addRoomRequest.Description,
+                    Capacity = addRoomRequest.Capacity,
+                    Price = addRoomRequest.Price,
+                    PictureUrl = addRoomRequest.PictureUrl,
+                    Available = addRoomRequest.Available,
+                    AvailableFrom = addRoomRequest.AvailableFrom,
+                    AvailableTo = addRoomRequest.AvailableTo
+                };
+
+                dbContext.Rooms.Add(room);
+                dbContext.SaveChanges();
+
+                return RedirectToAction("Add");
+            }
+
+            return View(addRoomRequest);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var room = dbContext.Rooms.Find(id);
+
+            if (room == null)
+            {
+                return NotFound();
+            }
+
+            var editRoomRequest = new EditRoomRequest
+            {
+                RoomNumber = room.RoomNumber,
+                Type = room.Type,
+                Description = room.Description,
+                Capacity = room.Capacity,
+                Price = room.Price,
+                PictureUrl = room.PictureUrl,
+                Available = room.Available,
+                AvailableFrom = room.AvailableFrom,
+                AvailableTo = room.AvailableTo
             };
 
-            dbContext.Rooms.Add(room);
-            dbContext.SaveChanges();
+            return View(editRoomRequest);
+        }
 
-            return View("Add");
+        [HttpPost]
+        public IActionResult Edit(EditRoomRequest editRoomRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                var room = dbContext.Rooms.Find(editRoomRequest.RoomId);
+
+                if (room == null)
+                {
+                    return NotFound();
+                }
+
+                room.RoomNumber = editRoomRequest.RoomNumber;
+                room.Type = editRoomRequest.Type;
+                room.Description = editRoomRequest.Description;
+                room.Capacity = editRoomRequest.Capacity;
+                room.Price = editRoomRequest.Price;
+                room.PictureUrl = editRoomRequest.PictureUrl;
+                room.Available = editRoomRequest.Available;
+
+                dbContext.Entry(room).State = EntityState.Modified;
+                dbContext.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+
+            return View(editRoomRequest);
         }
     }
 }

@@ -1,20 +1,70 @@
-﻿@model IEnumerable<Room>
-@{
-    ViewBag.Title = "Rooms List";
+﻿@model List<Room>
+
+
+
+
+<form method="get" action="@Url.Action("AllRooms")">
+    <label for="checkIn">Check In:</label>
+    <input type="date" name="checkIn" />
+
+    <label for="checkOut">Check Out:</label>
+    <input type="date" name="checkOut" />
+
+    <button type="submit">Check Availability</button>
+</form>
+
+@functions {
+    private bool IsRoomAvailable(Room room, DateTime checkIn, DateTime checkOut)
+    {
+        // Check if the room is available within its availability range
+        if (checkIn >= room.AvailableFrom && checkIn <= DateTime.MaxValue)
+        {
+            // Check if there are any reservations that overlap with the specified dates
+            return !room.Reservations.Any(r => (checkIn < r.CheckOut && checkOut > r.CheckIn));
+        }
+
+        return false;
+    }
 }
 
-<div class="card-deck">
-    @foreach (var room in Model)
-    {
-        <div class="card">
-            <img src="placeholder-image-url.jpg" class="card-img-top" alt="Room Image">
-            <div class="card-body">
-                <h5 class="card-title">@room.RoomNumber</h5>
-                <p class="card-text">Type: @room.Type</p>
-                <p class="card-text">Capacity: @room.Capacity</p>
-                <p class="card-text">Price: @room.Price</p>
-                <p class="card-text">Available: @(room.Available ? "Yes" : "No")</p>
-            </div>
-        </div>
-    }
-</div>
+
+@foreach (var room in Model)
+{
+    <div>
+        <h3>Room: @room.RoomNumber</h3>
+        <p>Type: @room.Type</p>
+        <p>Description: @room.Description</p>
+        <p>Capacity: @room.Capacity</p>
+        <p>Price: @room.Price</p>
+        <p>
+            @if (IsRoomAvailable(room, DateTime.Today, DateTime.MaxValue))
+            {
+                <text>Available: Yes</text>
+            }
+            else
+            {
+                <text>Not available</text>
+            }
+        </p>
+        <p><a href="@Url.Action("Create", "Reservation", new { roomId = room.Id })">Reserve</a></p>
+
+        @if (IsRoomAvailable(room, DateTime.Today, DateTime.MaxValue))
+        {
+            <form method="get" action="@Url.Action("MakeReservation", "Reservation")">
+                <input type="hidden" name="roomId" value="@room.Id" />
+                <label for="checkIn">Check In:</label>
+                <input type="date" name="checkIn" />
+
+                <label for="checkOut">Check Out:</label>
+                <input type="date" name="checkOut" />
+
+                <button type="submit">Reserve</button>
+            </form>
+        }
+        else
+        {
+            <p>Not available</p>
+        }
+    </div>
+}
+

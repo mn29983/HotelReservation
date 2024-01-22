@@ -10,8 +10,13 @@
 
         public decimal Price { get; set; }
 
-        public List<string> Pictures { get; set; }
+        public string PictureUrl { get; set; }
 
         public bool Available { get; set; }
+
+        public DateTime AvailableFrom { get; set; }
+        public DateTime AvailableTo { get; set; }
+
+
     }
 }
