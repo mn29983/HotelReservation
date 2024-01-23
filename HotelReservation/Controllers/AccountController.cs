@@ -39,13 +39,10 @@ public class AccountController : Controller
             {
                 try
                 {
-                    // Create the role
                     await _roleManager.CreateAsync(new IdentityRole(roleName));
                 }
                 catch (Exception ex)
                 {
-                    // Log a warning or handle the exception as needed
-                    // Duplicate role creation might not be an error, but you should be aware of it
                     _logger.LogWarning($"Failed to create role '{roleName}'. {ex.Message}");
                 }
             }
@@ -140,24 +137,6 @@ public class AccountController : Controller
         return RedirectToAction("Index", "Home");
     }
 
-
-    [HttpGet]
-    [Authorize(Roles = "Admin, User")]
-    public IActionResult ManageRoles()
-    {
-        if (User.IsInRole("Admin"))
-        {
-            return View("AllMedicine");
-        }
-        else if (User.IsInRole("User"))
-        {
-            return View("UserMedicine");
-        }
-        return RedirectToAction("Index", "Home");
-    }
-
-
-    // List Users
     [HttpGet]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> ViewUsers()

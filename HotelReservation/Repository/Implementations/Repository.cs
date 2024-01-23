@@ -1,46 +1,52 @@
-﻿using HotelReservation.Repository.Interfaces;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using HotelReservation.Repository.Interfaces;
 
-public class Repository<T> : IRepository<T> where T : class
+public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 {
     private readonly ApplicationDbContext _context;
+    private readonly DbSet<TEntity> _dbSet;
 
     public Repository(ApplicationDbContext context)
     {
-        _context = context;
+        _context = context ?? throw new ArgumentNullException(nameof(context));
+        _dbSet = context.Set<TEntity>();
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync()
+    public async Task<IEnumerable<TEntity>> GetAllAsync()
     {
-        return await _context.Set<T>().ToListAsync();
+        return await _dbSet.ToListAsync();
     }
 
-    public async Task AddAsync(T entity)
+    public async Task<TEntity> GetByIdAsync(int id)
     {
-        _context.Set<T>().Add(entity);
+        return await _dbSet.FindAsync(id);
+    }
+
+    public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
+    {
+        return await _dbSet.Where(predicate).ToListAsync();
+    }
+
+    public async Task AddAsync(TEntity entity)
+    {
+        await _dbSet.AddAsync(entity);
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(int id)
-    {
-        var entity = await _context.Set<T>().FindAsync(id);
-        if (entity != null)
-        {
-            _context.Set<T>().Remove(entity);
-            await _context.SaveChangesAsync();
-        }
-    }
-
-    public async Task<T> GetByIdAsync(int id)
-    {
-        return await _context.Set<T>().FindAsync(id);
-    }
-
-    public async Task UpdateAsync(T entity)
+    public async Task UpdateAsync(TEntity entity)
     {
         _context.Entry(entity).State = EntityState.Modified;
         await _context.SaveChangesAsync();
     }
 
-    // Implement other CRUD methods 
+    public async Task RemoveAsync(TEntity entity)
+    {
+        _dbSet.Remove(entity);
+        await _context.SaveChangesAsync();
+    }
 }

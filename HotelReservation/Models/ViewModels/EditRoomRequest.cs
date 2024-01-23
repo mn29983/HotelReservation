@@ -33,12 +33,12 @@ namespace HotelReservation.Models.ViewModels
         [Display(Name = "Available")]
         public bool Available { get; set; }
 
-        [Display(Name = "Available From")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? AvailableFrom { get; set; }
 
-        [Display(Name = "Available To")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? AvailableTo { get; set; }
     }
 }

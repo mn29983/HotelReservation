@@ -1,115 +1,109 @@
-﻿using HotelReservation.Models.ViewModels;
-using Microsoft.AspNetCore.Mvc;
-using HotelReservation.Models;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using HotelReservation.Services.Interfaces;
+using HotelReservation.Models;
+using HotelReservation.Services;
 
 namespace HotelReservation.Controllers
 {
     [Authorize(Roles = "Admin")]
+    [Route("adminroom")]
     public class AdminRoomController : Controller
     {
-        private readonly ApplicationDbContext dbContext;
+        private readonly IRoomService _roomService;
 
-        public AdminRoomController(ApplicationDbContext dbContext)
+        public AdminRoomController(IRoomService roomService)
         {
-            this.dbContext = dbContext;
+            _roomService = roomService ?? throw new ArgumentNullException(nameof(roomService));
         }
 
-        [HttpGet]
-        public IActionResult Index()
+        [HttpGet("all")]
+        public async Task<IActionResult> AllRooms()
         {
-            var rooms = dbContext.Rooms.ToList(); // Retrieve the list of rooms from your database
+            var rooms = await _roomService.GetAllRooms();
             return View(rooms);
         }
 
-        [HttpGet]
-        public IActionResult Add()
+        [HttpGet("create")]
+        public ActionResult Create()
         {
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Add(AddRoomRequest addRoomRequest)
+        [HttpPost("create")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Room room)
         {
             if (ModelState.IsValid)
             {
-                var room = new Room
-                {
-                    RoomNumber = addRoomRequest.RoomNumber,
-                    Type = addRoomRequest.Type,
-                    Description = addRoomRequest.Description,
-                    Capacity = addRoomRequest.Capacity,
-                    Price = addRoomRequest.Price,
-                    PictureUrl = addRoomRequest.PictureUrl,
-                    Available = addRoomRequest.Available,
-                    AvailableFrom = addRoomRequest.AvailableFrom,
-                    AvailableTo = addRoomRequest.AvailableTo
-                };
-
-                dbContext.Rooms.Add(room);
-                dbContext.SaveChanges();
-
-                return RedirectToAction("Add");
+                await _roomService.CreateRoom(room);
+                return RedirectToAction("AllRooms");
             }
-
-            return View(addRoomRequest);
+            return View(room);
         }
 
-        [HttpGet]
-        public IActionResult Edit(int id)
-        {
-            var room = dbContext.Rooms.Find(id);
 
+        [Authorize(Roles = "Admin")]
+        [HttpGet("update/{id}")]
+        public async Task<IActionResult> Update(int id)
+        {
+            var room = await _roomService.GetRoomById(id);
+            if (room == null)
+            {
+                return NotFound();
+            }
+            return View("Update", room);
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("update/{id}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(int id, Room room)
+        {
+            if (id != room.RoomId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                await _roomService.UpdateRoom(room);
+                return RedirectToAction("AllRooms");
+            }
+
+            // If ModelState is not valid, return the same view with the model
+            return View(room);
+        }
+
+        [HttpGet("delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var room = await _roomService.GetRoomById(id);
             if (room == null)
             {
                 return NotFound();
             }
 
-            var editRoomRequest = new EditRoomRequest
-            {
-                RoomNumber = room.RoomNumber,
-                Type = room.Type,
-                Description = room.Description,
-                Capacity = room.Capacity,
-                Price = room.Price,
-                PictureUrl = room.PictureUrl,
-                Available = room.Available,
-                AvailableFrom = room.AvailableFrom,
-                AvailableTo = room.AvailableTo
-            };
-
-            return View(editRoomRequest);
+            return View(room);
         }
 
-        [HttpPost]
-        public IActionResult Edit(EditRoomRequest editRoomRequest)
+        [HttpPost("delete/{id}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var room = dbContext.Rooms.Find(editRoomRequest.RoomId);
-
-                if (room == null)
-                {
-                    return NotFound();
-                }
-
-                room.RoomNumber = editRoomRequest.RoomNumber;
-                room.Type = editRoomRequest.Type;
-                room.Description = editRoomRequest.Description;
-                room.Capacity = editRoomRequest.Capacity;
-                room.Price = editRoomRequest.Price;
-                room.PictureUrl = editRoomRequest.PictureUrl;
-                room.Available = editRoomRequest.Available;
-
-                dbContext.Entry(room).State = EntityState.Modified;
-                dbContext.SaveChanges();
-
-                return RedirectToAction("Index");
+                await _roomService.DeleteRoom(id);
+                return RedirectToAction("AllRooms");
             }
-
-            return View(editRoomRequest);
+            catch (Exception)
+            {
+                // Handle exceptions or show an error view
+                return StatusCode(500);
+            }
         }
     }
 }

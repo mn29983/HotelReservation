@@ -33,15 +33,16 @@
                         @if (User.IsInRole("Admin"))
                         {
                         <div class="btn-group">
-                                <button type="button" class="btn btn-info" onclick="window.location.href='/AdminRoom/Index'">
-                                    View Rooms
+                                <button type="button" class="btn btn-info">
+                                    Dashbord
                                 </button>
                             <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="visually-hidden">Toggle Dropdown</span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-area="" asp-controller="AdminRoom" asp-action="Add">Add Room</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="ViewUsers">User List</a>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="AdminRoom" asp-action="Create">Add Room</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="ViewUsers">User List</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="AdminRoom" asp-action="AllRooms">Rooms</a></li>
                             </ul>
                         </div>
                         }

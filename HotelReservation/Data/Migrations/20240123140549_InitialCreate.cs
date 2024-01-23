@@ -58,7 +58,7 @@ namespace HotelReservation.Migrations
                 name: "Rooms",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    RoomId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     RoomNumber = table.Column<string>(type: "text", nullable: false),
                     Type = table.Column<string>(type: "text", nullable: false),
@@ -67,12 +67,12 @@ namespace HotelReservation.Migrations
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
                     PictureUrl = table.Column<string>(type: "text", nullable: false),
                     Available = table.Column<bool>(type: "boolean", nullable: false),
-                    AvailableFrom = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    AvailableTo = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    AvailableFrom = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    AvailableTo = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rooms", x => x.Id);
+                    table.PrimaryKey("PK_Rooms", x => x.RoomId);
                 });
 
             migrationBuilder.CreateTable(
@@ -216,7 +216,7 @@ namespace HotelReservation.Migrations
                         name: "FK_Reservations_Rooms_RoomId",
                         column: x => x.RoomId,
                         principalTable: "Rooms",
-                        principalColumn: "Id",
+                        principalColumn: "RoomId",
                         onDelete: ReferentialAction.Cascade);
                 });
 

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
@@ -18,10 +18,14 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Reservation>()
-            .HasOne(r => r.Room)
-            .WithMany(room => room.Reservations)
-            .HasForeignKey(r => r.RoomId);
+        modelBuilder.Entity<Room>()
+    .Property(r => r.AvailableFrom)
+    .HasColumnType("timestamp with time zone");
+
+        modelBuilder.Entity<Room>()
+            .Property(r => r.AvailableTo)
+            .HasColumnType("timestamp with time zone");
+
     }
 
 }

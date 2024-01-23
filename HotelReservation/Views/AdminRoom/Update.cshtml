@@ -1,0 +1,61 @@
+﻿@model HotelReservation.Models.Room
+
+<h2>Edit Room</h2>
+
+<form asp-action="Update" asp-route-id="@Model.RoomId" method="post">
+    <div class="form-group">
+        <label asp-for="RoomNumber"></label>
+        <input asp-for="RoomNumber" class="form-control" />
+        <span asp-validation-for="RoomNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Type"></label>
+        <input asp-for="Type" class="form-control" />
+        <span asp-validation-for="Type" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Capacity"></label>
+        <input asp-for="Capacity" class="form-control" />
+        <span asp-validation-for="Capacity" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PictureUrl"></label>
+        <input asp-for="PictureUrl" class="form-control" />
+        <span asp-validation-for="PictureUrl" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Available"></label>
+        <input asp-for="Available" class="form-control" />
+        <span asp-validation-for="Available" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AvailableFrom"></label>
+        <input asp-for="AvailableFrom" class="form-control" />
+        <span asp-validation-for="AvailableFrom" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AvailableTo"></label>
+        <input asp-for="AvailableTo" class="form-control" />
+        <span asp-validation-for="AvailableTo" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>

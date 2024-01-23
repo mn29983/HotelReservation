@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HotelReservation.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240123140549_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,19 +130,19 @@ namespace HotelReservation.Migrations
 
             modelBuilder.Entity("HotelReservation.Models.Room", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("RoomId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RoomId"));
 
                     b.Property<bool>("Available")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("AvailableFrom")
+                    b.Property<DateTime?>("AvailableFrom")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("AvailableTo")
+                    b.Property<DateTime?>("AvailableTo")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Capacity")
@@ -164,7 +167,7 @@ namespace HotelReservation.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("RoomId");
 
                     b.ToTable("Rooms");
                 });
@@ -337,7 +340,7 @@ namespace HotelReservation.Migrations
             modelBuilder.Entity("HotelReservation.Models.Reservation", b =>
                 {
                     b.HasOne("HotelReservation.Models.Room", "Room")
-                        .WithMany("Reservations")
+                        .WithMany()
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -394,11 +397,6 @@ namespace HotelReservation.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("HotelReservation.Models.Room", b =>
-                {
-                    b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618
         }

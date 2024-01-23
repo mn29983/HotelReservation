@@ -1,8 +1,18 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using HotelReservation.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Npgsql.NodaTime;
+using HotelReservation.Models;
+using HotelReservation.Repository.Interfaces;
+using HotelReservation.Services.Implementations;
+using HotelReservation.Services.Interfaces;
+using Npgsql;
 
 namespace HotelReservation
 {
@@ -12,26 +22,21 @@ namespace HotelReservation
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
-
-
-            //We add this so we can use the configuration made in appsettings.json
             IConfigurationRoot configuration = new ConfigurationBuilder()
-           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-           .Build();
-            //
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
 
-            //We create AppDbContext in models and using this we connect to the db
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseNpgsql(
-                configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+   
 
+
+            builder.Services.AddScoped<IRepository<Room>, Repository<Room>>();
+            builder.Services.AddScoped<IRoomService, RoomService>();
 
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-             .AddEntityFrameworkStores<ApplicationDbContext>()
-             .AddDefaultTokenProviders();
-
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             builder.Services.AddAuthorization();
 
@@ -43,24 +48,23 @@ namespace HotelReservation
             });
 
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-               .AddCookie(options =>
-               {
-                   options.Cookie.HttpOnly = true;
-                   options.ExpireTimeSpan = TimeSpan.FromDays(1);
-                   options.LoginPath = "/Account/Login";
-               });
-
-
-
+                .AddCookie(options =>
+                {
+                    options.Cookie.HttpOnly = true;
+                    options.ExpireTimeSpan = TimeSpan.FromDays(1);
+                    options.LoginPath = "/Account/Login";
+                });
 
             var app = builder.Build();
 
+            using var scope = app.Services.CreateScope();
+            var services = scope.ServiceProvider;
+            var dbContext = services.GetRequiredService<ApplicationDbContext>();
+            dbContext.Database.Migrate();
 
-            // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -72,18 +76,15 @@ namespace HotelReservation
             app.UseAuthentication();
             app.UseAuthorization();
 
-
             app.UseSwagger();
             app.UseSwaggerUI(c =>
-            c.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API v1"));
-
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API v1"));
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
-                
         }
     }
 }

@@ -1,11 +1,18 @@
-﻿namespace HotelReservation.Repository.Interfaces
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+
+
+namespace HotelReservation.Repository.Interfaces
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<TEntity> where TEntity : class
     {
-        Task<IEnumerable<T>> GetAllAsync();
-        Task<T> GetByIdAsync(int id);
-        Task AddAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task DeleteAsync(int id);
+        Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<TEntity> GetByIdAsync(int id);
+        Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
+        Task AddAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
+        Task RemoveAsync(TEntity entity);
     }
 }

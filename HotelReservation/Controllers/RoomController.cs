@@ -1,53 +1,47 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HotelReservation.Models;
+using HotelReservation.Services.Interfaces;
+using HotelReservation.Services;
 using System.Linq;
 
 public class RoomController : Controller
 {
-    private readonly ApplicationDbContext dbContext;
+    private readonly IRoomService _roomService;
 
-    public RoomController(ApplicationDbContext dbContext)
+    public RoomController(IRoomService roomService)
     {
-        this.dbContext = dbContext;
+        _roomService = roomService ?? throw new ArgumentNullException(nameof(roomService));
     }
 
-
-    [HttpGet]
-    public IActionResult AllRooms(DateTime? checkIn, DateTime? checkOut)
+    [HttpGet("all")]
+    public async Task<IActionResult> AllRooms()
     {
-        var rooms = dbContext.Rooms.Include(r => r.Reservations).ToList();
-
-        // Check availability for each room based on the specified dates
-        if (checkIn.HasValue && checkOut.HasValue)
-        {
-            rooms = rooms.Where(room => IsRoomAvailable(room, checkIn.Value, checkOut.Value)).ToList();
-        }
-
-        return View("AllRooms", rooms);
+        var rooms = await _roomService.GetAllRooms();
+        return View(rooms);
     }
 
-    public bool IsRoomAvailable(Room room, DateTime checkIn, DateTime checkOut)
-    {
-        // Check if there are any reservations that overlap with the specified dates
-        return !room.Reservations.Any(r => (checkIn < r.CheckOut && checkOut > r.CheckIn));
-    }
+    //public bool IsRoomAvailable(Room room, DateTime checkIn, DateTime checkOut)
+    //{
+    //    // Check if there are any reservations that overlap with the specified dates
+    //    return !room.Reservations.Any(r => (checkIn < r.CheckOut && checkOut > r.CheckIn));
+    //}
 
     // Action to display all rooms for regular users with availability check
-    [HttpGet]
-    public IActionResult AllRoomsAvailability(DateTime? checkIn, DateTime? checkOut)
-    {
-        // Retrieve all rooms from the database
-        var rooms = dbContext.Rooms.ToList();
+    //[HttpGet]
+    //public IActionResult AllRoomsAvailability(DateTime? checkIn, DateTime? checkOut)
+    //{
+    //    // Retrieve all rooms from the database
+    //    var rooms = dbContext.Rooms.ToList();
 
-        // Check availability for each room based on the specified dates
-        if (checkIn.HasValue && checkOut.HasValue)
-        {
-            rooms = rooms.Where(room => IsRoomAvailable(room, checkIn.Value, checkOut.Value)).ToList();
-        }
+    //    // Check availability for each room based on the specified dates
+    //    if (checkIn.HasValue && checkOut.HasValue)
+    //    {
+    //        rooms = rooms.Where(room => IsRoomAvailable(room, checkIn.Value, checkOut.Value)).ToList();
+    //    }
 
-        // Pass the list of rooms to the view
-        return View("AllRooms", rooms);
-    }
+    //    // Pass the list of rooms to the view
+    //    return View("AllRooms", rooms);
+    //}
 }
 
