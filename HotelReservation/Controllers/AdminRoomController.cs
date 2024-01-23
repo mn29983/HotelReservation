@@ -9,7 +9,7 @@ using HotelReservation.Services;
 namespace HotelReservation.Controllers
 {
     [Authorize(Roles = "Admin")]
-    [Route("adminroom")]
+    [Route("dashboard/adminroom")]
     public class AdminRoomController : Controller
     {
         private readonly IRoomService _roomService;
@@ -23,13 +23,13 @@ namespace HotelReservation.Controllers
         public async Task<IActionResult> AllRooms()
         {
             var rooms = await _roomService.GetAllRooms();
-            return View(rooms);
+            return View("Views/Dashboard/AdminRoom/AllRooms.cshtml", rooms);
         }
 
         [HttpGet("create")]
         public ActionResult Create()
         {
-            return View();
+            return View("Views/Dashboard/AdminRoom/Create.cshtml");
         }
 
         [HttpPost("create")]
@@ -41,9 +41,8 @@ namespace HotelReservation.Controllers
                 await _roomService.CreateRoom(room);
                 return RedirectToAction("AllRooms");
             }
-            return View(room);
+            return View("Views/Dashboard/AdminRoom/Create.cshtml", room);
         }
-
 
         [Authorize(Roles = "Admin")]
         [HttpGet("update/{id}")]
@@ -54,9 +53,8 @@ namespace HotelReservation.Controllers
             {
                 return NotFound();
             }
-            return View("Update", room);
+            return View("Views/Dashboard/AdminRoom/Update.cshtml", room);
         }
-
 
         [Authorize(Roles = "Admin")]
         [HttpPost("update/{id}")]
@@ -75,7 +73,7 @@ namespace HotelReservation.Controllers
             }
 
             // If ModelState is not valid, return the same view with the model
-            return View(room);
+            return View("Views/Dashboard/AdminRoom/Update.cshtml", room);
         }
 
         [HttpGet("delete/{id}")]
@@ -87,7 +85,7 @@ namespace HotelReservation.Controllers
                 return NotFound();
             }
 
-            return View(room);
+            return View("Views/Dashboard/AdminRoom/Delete.cshtml", room);
         }
 
         [HttpPost("delete/{id}")]

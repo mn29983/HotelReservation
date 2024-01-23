@@ -1,0 +1,25 @@
+﻿@model IEnumerable<HotelReservation.Models.Room>
+
+<h2>All Rooms</h2>
+
+<div class="row">
+    @foreach (var room in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Room Number: @room.RoomNumber</h5>
+                    <p class="card-text"><strong>Type:</strong> @room.Type</p>
+                    <p class="card-text"><strong>Description:</strong> @room.Description</p>
+                    <p class="card-text"><strong>Capacity:</strong> @room.Capacity</p>
+                    <p class="card-text"><strong>Price:</strong> @room.Price</p>
+                    <p class="card-text"><strong>Available:</strong> @room.Available</p>
+                    <div class="btn-group">
+                        <a asp-action="Update" asp-route-id="@room.RoomId" class="btn btn-primary">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@room.RoomId" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

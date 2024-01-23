@@ -1,0 +1,531 @@
+﻿<!-- Views/Dashboard/Index.cshtml -->
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <style>
+        :root {
+            --c-gray-900: #000000;
+            --c-gray-800: #1f1f1f;
+            --c-gray-700: #2e2e2e;
+            --c-gray-600: #313131;
+            --c-gray-500: #969593;
+            --c-gray-400: #a6a6a6;
+            --c-gray-300: #bdbbb7;
+            --c-gray-200: #f1f1f1;
+            --c-gray-100: #ffffff;
+            --c-green-500: #45ffbc;
+            --c-olive-500: #e3ffa8;
+            --c-white: var(--c-gray-100);
+            --c-text-primary: var(--c-gray-100);
+            --c-text-secondary: var(--c-gray-200);
+            --c-text-tertiary: var(--c-gray-500);
+        }
+
+        body {
+            line-height: 1.5;
+            min-height: 100vh;
+            font-family: "Be Vietnam Pro", sans-serif;
+            background-color: var(--c-gray-900);
+            color: var(--c-text-primary);
+            display: flex;
+            justify-content: center;
+        }
+
+
+        .table {
+            color: #bdbbb7;
+        }
+
+        .custom-card-img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card {
+            margin: 1rem;
+            background-color: #313131;
+        }
+
+        .btn {
+            margin: 0.5rem;
+        }
+
+        .card:hover {
+            text-decoration: none;
+            background-color: #1f1f1f;
+            box-shadow: 0 0 10px #E55604;
+        }
+
+        .card a:hover {
+            text-decoration: none;
+        }
+
+        .card-title {
+            color: #E55604;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: x-large;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            padding-bottom: 1rem;
+            padding-top: 1rem;
+            border-bottom: 1px solid var(--c-gray-600);
+        }
+
+        .logo-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+        }
+
+        .logo-title {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.25;
+            margin-left: 0.75rem;
+            span: first-child
+
+        {
+            color: var(--c-text-primary);
+        }
+
+        span:last-child {
+            color: var(--c-text-tertiary);
+        }
+
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: border-box;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        button,
+        select,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .app {
+            min-height: 80vh;
+            width: 95%;
+            max-width: 1600px;
+            background-color: var(--c-gray-800);
+            padding: 2vw 4vw 6vw;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-header {
+            display: grid;
+            grid-template-columns: minmax(min-content, 175px) minmax(max-content, 1fr) minmax( max-content, 400px );
+            column-gap: 4rem;
+            align-items: flex-end;
+
+
+        }
+
+
+        }
+
+        .app-header-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .app-body {
+            height: 100%;
+            display: grid;
+            grid-template-columns: minmax(min-content, 175px) minmax(max-content, 1fr) minmax( min-content, 400px );
+            column-gap: 4rem;
+            padding-top: 2.5rem;
+        }
+
+        .app-body-navigation {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            padding-bottom: 1rem;
+            padding-top: 1rem;
+            border-bottom: 1px solid var(--c-gray-600);
+        }
+
+        .navigation {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            color: var(--c-text-tertiary);
+            a
+
+        {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: 0.25s ease;
+            *
+
+        {
+            transition: 0.25s ease;
+        }
+
+        i {
+            margin-right: 0.75rem;
+            font-size: 1.25em;
+            flex-shrink: 0;
+        }
+
+        & + a {
+            margin-top: 1.25rem;
+        }
+
+        &:hover,
+        &:focus {
+            transform: translateX(4px);
+            color: var(--c-text-primary);
+        }
+
+        }
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-between;
+            color: var(--c-text-tertiary);
+            border-bottom: 1px solid var(--c-gray-600);
+            a
+
+        {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            text-decoration: none;
+            border-top: 2px solid transparent;
+            display: inline-flex;
+            transition: 0.25s ease;
+            &.active, &:hover, &:focus
+
+        {
+            color: var(--c-text-primary);
+            border-color: var(--c-text-primary);
+        }
+
+        }
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+            color: var(--c-text-tertiary);
+            transition: 0.25s ease;
+            &:hover, &:focus
+
+        {
+            color: var(--c-text-primary);
+            span: last-child
+
+        {
+            box-shadow: 0 0 0 4px var(--c-gray-800), 0 0 0 5px var(--c-text-tertiary);
+        }
+
+        }
+
+        span:first-child {
+            display: flex;
+            font-size: 1.125rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--c-gray-600);
+            font-weight: 300;
+        }
+
+        span:last-child {
+            transition: 0.25s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-left: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        }
+
+        .icon-button {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 0;
+            background-color: transparent;
+            border: 1px solid var(--c-gray-500);
+            color: var(--c-text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.25s ease;
+            flex-shrink: 0;
+            &.large
+
+        {
+            width: 42px;
+            height: 42px;
+            font-size: 1.25em;
+        }
+
+        i {
+            transition: 0.25s ease;
+        }
+
+        &:hover,
+        &:focus {
+            background-color: var(--c-gray-600);
+            box-shadow: 0 0 0 4px var(--c-gray-800), 0 0 0 5px var(--c-text-tertiary);
+        }
+
+        }
+
+        .tiles {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            column-gap: 1rem;
+            row-gap: 1rem;
+            margin-top: 1.25rem;
+        }
+
+        .tile {
+            padding: 1rem;
+            border-radius: 8px;
+            background-color: var(--c-olive-500);
+            color: var(--c-gray-900);
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            transition: 0.25s ease;
+            &:hover
+
+        {
+            transform: translateY(-5px);
+        }
+
+        &:focus-within {
+            box-shadow: 0 0 0 2px var(--c-gray-800), 0 0 0 4px var(--c-olive-500);
+        }
+
+        &:nth-child(2) {
+            background-color: var(--c-green-500);
+            &:focus-within
+
+        {
+            box-shadow: 0 0 0 2px var(--c-gray-800), 0 0 0 4px var(--c-green-500);
+        }
+
+        }
+
+        &:nth-child(3) {
+            background-color: var(--c-gray-300);
+            &:focus-within
+
+        {
+            box-shadow: 0 0 0 2px var(--c-gray-800), 0 0 0 4px var(--c-gray-300);
+        }
+
+        }
+
+        a {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 600;
+            .icon-button
+
+        {
+            color: inherit;
+            border-color: inherit;
+            &:hover, &:focus
+
+        {
+            background-color: transparent;
+            i
+
+        {
+            transform: none;
+        }
+
+        }
+        }
+
+        &:focus {
+            box-shadow: none;
+        }
+
+        &:after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        }
+        }
+
+        .tile-header {
+            display: flex;
+            align-items: center;
+            i
+
+        {
+            font-size: 2.5em;
+        }
+
+        h3 {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.375;
+            margin-left: 0.5rem;
+            span: first-child
+
+        {
+            font-weight: 600;
+        }
+
+        span:last-child {
+            font-size: 0.825em;
+            font-weight: 200;
+        }
+        }
+
+    </style>
+
+<div class="app">
+    <header class="app-header">
+        <div class="app-header-logo">
+            <div class="logo">
+                <h1 class="logo-title">
+                    <span>Dashboard</span>
+                </h1>
+            </div>
+        </div>
+        <div class="app-header-navigation">
+            <div class="tabs">
+                <a asp-controller="AdminRoom" asp-action="AllRooms">View All Rooms</a>
+                <a asp-controller="AdminRoom" asp-action="Create">Create New Room</a>
+                <a asp-controller="Account" asp-action="ViewUsers">User List</a>
+            </div>
+        </div>
+        <div class="app-header-actions">
+            <button class="user-profile">
+                <span class="navbar-text">Welcome Admin!</span>
+                <span>
+                    <a>X</a>
+                </span>
+            </button>
+        </div>
+
+    </header>
+    <div class="app-body">
+        <div class="app-body-navigation">
+            <nav class="navigation">
+                <a href="{{ url('/dashboard') }}">
+                    <i class="ph-browsers"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="{{ url('/') }}">
+                    <i class="ph-check-square"></i>
+                    <span>User Site</span>
+                </a>
+                <a href="#">
+                    <i class="ph-check-square"></i>
+                    <span>Messages</span>
+                </a>
+            </nav>
+        </div>
+
+        <div>
+            <!-- Summary Statistics -->
+            <div class="tiles">
+                <div class="tile">
+                    <div class="tile-header">
+                        <i class="ph-dashboard"></i>
+                        <h3>
+                            <span>Total Rooms</span>
+                            <span>100</span>
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="tile">
+                    <div class="tile-header">
+                        <i class="ph-calendar"></i>
+                        <h3>
+                            <span>Bookings Today</span>
+                            <span>25</span>
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="tile">
+                    <div class="tile-header">
+                        <i class="ph-users"></i>
+                        <h3>
+                            <span>Active Users</span>
+                            <span>50</span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activities -->
+            <div class="card">
+                <div class="card-title">Recent Activities</div>
+                <ul class="list-group">
+                    <li class="list-group-item">Added new room - Room 101</li>
+                    <li class="list-group-item">User John Doe registered</li>
+                    <li class="list-group-item">Room 105 booked by User Jane Smith</li>
+                </ul>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card">
+                <div class="card-title">Quick Actions</div>
+                <div class="btn-group">
+                    <button class="btn btn-primary">Create New Room</button>
+                    <button class="btn btn-secondary">View User List</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

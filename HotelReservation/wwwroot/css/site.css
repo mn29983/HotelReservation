@@ -18,5 +18,20 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #202528;
+    color:aliceblue;
+}
+
+.navbarbg {
+    background-color: #856049;
+}
+
+.table{
+    color:aliceblue;
+}
+
+.mask-custom {
+    backdrop-filter: blur(15px);
+    background-color: rgba(133,96,68,0.25);
 }
