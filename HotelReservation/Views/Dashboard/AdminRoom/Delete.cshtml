@@ -21,9 +21,6 @@
         <dt class="col-sm-2">Price</dt>
         <dd class="col-sm-10">@Model.Price</dd>
 
-        <dt class="col-sm-2">Picture URL</dt>
-        <dd class="col-sm-10">@Model.PictureUrl</dd>
-
         <dt class="col-sm-2">Available</dt>
         <dd class="col-sm-10">@Model.Available</dd>
 
@@ -32,7 +29,14 @@
 
         <dt class="col-sm-2">Available To</dt>
         <dd class="col-sm-10">@Model.AvailableTo</dd>
+
+        <dt class="col-sm-2">Pictures</dt>
     </dl>
+
+        <img src="@Model.PictureUrl1" class="card-img-top custom-img-delete" alt="Picture" />
+        <img src="@Model.PictureUrl2" class="card-img-top custom-img-delete" alt="Picture" />
+        <img src="@Model.PictureUrl3" class="card-img-top custom-img-delete" alt="Picture" />
+
     <form asp-action="Delete" asp-route-id="@Model.RoomId">
         <input type="submit" value="Delete" class="btn btn-danger" />
         <a asp-action="AllRooms" class="btn btn-secondary">Cancel</a>

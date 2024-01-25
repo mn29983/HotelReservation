@@ -2,24 +2,29 @@
 
 <h2>All Rooms</h2>
 
-<div class="row">
+<div class="row row-cols-1 row-cols-md-4 g-4">
     @foreach (var room in Model)
     {
-        <div class="col-md-4">
-            <div class="card mb-4">
+        <div class="col">
+            <div class="card h-100">
+                <img src="@room.PictureUrl1" class="card-img-top custom-img-size" alt="Picture" />
                 <div class="card-body">
-                    <h5 class="card-title">Room Number: @room.RoomNumber</h5>
-                    <p class="card-text"><strong>Type:</strong> @room.Type</p>
-                    <p class="card-text"><strong>Description:</strong> @room.Description</p>
-                    <p class="card-text"><strong>Capacity:</strong> @room.Capacity</p>
-                    <p class="card-text"><strong>Price:</strong> @room.Price</p>
-                    <p class="card-text"><strong>Available:</strong> @room.Available</p>
-                    <div class="btn-group">
-                        <a asp-action="Update" asp-route-id="@room.RoomId" class="btn btn-primary">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@room.RoomId" class="btn btn-danger">Delete</a>
-                    </div>
+                    <h5 class="card-title">Room @room.RoomNumber</h5>
+                    <p class="card-text">
+                        Type: @room.Type <br />
+                        Description: @room.Description <br />
+                        Capacity: @room.Capacity <br />
+                        Price: @room.Price <br />
+                        Available: @room.Available
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="@Url.Action("About", "Room", new { id = room.RoomId })" class="btn btn-primary">Learn more</a>
+                    <a asp-action="Update" asp-route-id="@room.RoomId" class="btn btn-primary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@room.RoomId" class="btn btn-danger">Delete</a>
                 </div>
             </div>
         </div>
     }
 </div>
+

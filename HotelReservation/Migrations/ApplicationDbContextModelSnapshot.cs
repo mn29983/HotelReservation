@@ -149,7 +149,15 @@ namespace HotelReservation.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("PictureUrl")
+                    b.Property<string>("PictureUrl1")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PictureUrl2")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PictureUrl3")
                         .IsRequired()
                         .HasColumnType("text");
 

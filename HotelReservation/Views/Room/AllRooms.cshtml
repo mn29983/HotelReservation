@@ -2,28 +2,27 @@
 
 <h2>All Rooms</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Room Number</th>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Capacity</th>
-            <th>Price</th>
-            <th>Available</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var room in Model)
-        {
-            <tr>
-                <td>@room.RoomNumber</td>
-                <td>@room.Type</td>
-                <td>@room.Description</td>
-                <td>@room.Capacity</td>
-                <td>@room.Price</td>
-                <td>@room.Available</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    @foreach (var room in Model)
+    {
+        <div class="col">
+            <div class="card h-100 d-flex flex-column">
+                <img src="@room.PictureUrl1" class="card-img-top custom-img-size"
+                     alt="Picture" />
+                <div class="card-body flex-grow-1">
+                    <h5 class="card-title">Room @room.RoomNumber</h5>
+                    <p class="card-text">
+                        Type: @room.Type <br />
+                        Description: @room.Description <br />
+                        Capacity: @room.Capacity <br />
+                        Price: @room.Price <br />
+                        Available: @room.Available
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="@Url.Action("About", "Room", new { id = room.RoomId })" class="btn btn-primary">Learn more</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

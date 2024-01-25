@@ -28,7 +28,9 @@ namespace HotelReservation.Models.ViewModels
         public decimal Price { get; set; }
 
         [Display(Name = "Picture URL")]
-        public string PictureUrl { get; set; }
+        public string PictureUrl1 { get; set; }
+        public string PictureUrl2 { get; set; }
+        public string PictureUrl3 { get; set; }
 
         [Display(Name = "Available")]
         public bool Available { get; set; }

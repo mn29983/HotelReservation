@@ -65,7 +65,9 @@ namespace HotelReservation.Migrations
                     Description = table.Column<string>(type: "text", nullable: false),
                     Capacity = table.Column<int>(type: "integer", nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
-                    PictureUrl = table.Column<string>(type: "text", nullable: false),
+                    PictureUrl1 = table.Column<string>(type: "text", nullable: false),
+                    PictureUrl2 = table.Column<string>(type: "text", nullable: false),
+                    PictureUrl3 = table.Column<string>(type: "text", nullable: false),
                     Available = table.Column<bool>(type: "boolean", nullable: false),
                     AvailableFrom = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     AvailableTo = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)

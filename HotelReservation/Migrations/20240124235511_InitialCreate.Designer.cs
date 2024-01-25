@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HotelReservation.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240123140549_InitialCreate")]
+    [Migration("20240124235511_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -152,7 +152,15 @@ namespace HotelReservation.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("PictureUrl")
+                    b.Property<string>("PictureUrl1")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PictureUrl2")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PictureUrl3")
                         .IsRequired()
                         .HasColumnType("text");
 

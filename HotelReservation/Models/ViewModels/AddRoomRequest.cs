@@ -10,7 +10,9 @@
 
         public decimal Price { get; set; }
 
-        public string PictureUrl { get; set; }
+        public string PictureUrl1 { get; set; }
+        public string PictureUrl2 { get; set; }
+        public string PictureUrl3 { get; set; }
 
         public bool Available { get; set; }
 
