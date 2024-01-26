@@ -4,6 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HotelReservation</title>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/HotelReservation.styles.css" asp-append-version="true" />
     @RenderSection("Styles", required: false) <!-- This line includes the section for additional styles -->
@@ -54,6 +58,10 @@
                                     <li>
                                         <a class="nav-link px-0 fs-5 text-white" asp-controller="Dashboard" asp-action="Index"> <span class="d-none d-sm-inline">Dashboard</span> </a>
                                     </li>
+                                    <li>
+                                        <a class="nav-link px-0 fs-5 text-white" asp-action="AllReservations" asp-controller="Dashboard"> <span class="d-none d-sm-inline">View All Reservations</span></a>
+                                    </li>
+
 
                                     <li>
                                         <a class="nav-link px-0 fs-5 text-white" asp-controller="Account" asp-action="ViewUsers"> <span class="d-none d-sm-inline">User</span> list </a>
@@ -120,63 +128,5 @@
     </div>
 
 
-    <div class="container my-5">
-        <footer style="background-color: #deded5;">
-            <div class="container p-4" style="margin: 0px">
-                <div class="row">
-                    <div class="col-lg-6 col-md-12 mb-4">
-                        <h5 class="mb-3" style="letter-spacing: 2px; color: #818963;">footer content</h5>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
-                            molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam
-                            voluptatem veniam, est atque cumque eum delectus sint!
-                        </p>
-                    </div>
-                    <div class="col-lg-3 col-md-6 mb-4">
-                        <h5 class="mb-3" style="letter-spacing: 2px; color: #818963;">links</h5>
-                        <ul class="list-unstyled mb-0">
-                            <li class="mb-1">
-                                <a href="#!" style="color: #4f4f4f;">Frequently Asked Questions</a>
-                            </li>
-                            <li class="mb-1">
-                                <a href="#!" style="color: #4f4f4f;">Delivery</a>
-                            </li>
-                            <li class="mb-1">
-                                <a href="#!" style="color: #4f4f4f;">Pricing</a>
-                            </li>
-                            <li>
-                                <a href="#!" style="color: #4f4f4f;">Where we deliver?</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-3 col-md-6 mb-4">
-                        <h5 class="mb-1" style="letter-spacing: 2px; color: #818963;">Checking in/Checking out</h5>
-                        <table class="table" style="color: #4f4f4f; border-color: #666;">
-                            <tbody>
-                                <tr>
-                                    <td>Check in:</td>
-                                    <td>11am - 9pm</td>
-                                </tr>
-                                <tr>
-                                    <td>Check out:</td>
-                                    <td>6am - 10am</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-                © 2020 Copyright:
-                <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-            </div>
-            <!-- Copyright -->
-        </footer>
-
-    </div>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -105,22 +105,16 @@ namespace HotelReservation.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CheckIn")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("CheckOut")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Guest")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<int>("RoomId")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.HasIndex("RoomId");
+                    b.HasKey("Id");
 
                     b.ToTable("Reservations");
                 });
@@ -340,17 +334,6 @@ namespace HotelReservation.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("HotelReservation.Models.Reservation", b =>
-                {
-                    b.HasOne("HotelReservation.Models.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HotelReservation.Models;
+using HotelReservation.Models.ViewModels;
 
 namespace HotelReservation.Services.Interfaces
 {

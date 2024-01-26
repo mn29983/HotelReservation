@@ -1,6 +1,7 @@
 ﻿using HotelReservation.Models;
 using HotelReservation.Repository.Interfaces;
 using HotelReservation.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace HotelReservation.Services.Implementations

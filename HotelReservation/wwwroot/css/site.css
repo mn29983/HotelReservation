@@ -38,14 +38,6 @@ body {
 
 .card {
     background-color: #856049;
-    flex: 1;
-    margin: 10px;
-    height: 300px;
-}
-
-.card-group {
-    display: flex;
-    flex-wrap: wrap;
 }
 
 .custom-img-size {
@@ -57,4 +49,3 @@ body {
     height: 300px;
     width: 300px;
 }
-

@@ -44,7 +44,6 @@ namespace HotelReservation.Controllers
             return View("Views/Dashboard/AdminRoom/Create.cshtml", room);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet("update/{id}")]
         public async Task<IActionResult> Update(int id)
         {
@@ -53,27 +52,19 @@ namespace HotelReservation.Controllers
             {
                 return NotFound();
             }
+
             return View("Views/Dashboard/AdminRoom/Update.cshtml", room);
         }
-
-        [Authorize(Roles = "Admin")]
-        [HttpPost("update/{id}")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int id, Room room)
+        public async Task<IActionResult> Update(Room room)
         {
-            if (id != room.RoomId)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 await _roomService.UpdateRoom(room);
                 return RedirectToAction("AllRooms");
             }
-
-            // If ModelState is not valid, return the same view with the model
-            return View("Views/Dashboard/AdminRoom/Update.cshtml", room);
+            return View("Views/Dashboard/AdminRoom/AllRooms.cshtml", room);
         }
 
         [HttpGet("delete/{id}")]

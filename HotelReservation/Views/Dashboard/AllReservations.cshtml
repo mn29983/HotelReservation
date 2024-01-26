@@ -1,0 +1,25 @@
+﻿@model IEnumerable<HotelReservation.Models.Reservation>
+
+<h2>All Reservations</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Reservation ID</th>
+            <th>Room ID</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reservation in Model)
+        {
+            <tr>
+                <td>@reservation.Id</td>
+                <td>@reservation.RoomId</td>
+                <td>@reservation.StartDate.ToShortDateString()</td>
+                <td>@reservation.EndDate.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>

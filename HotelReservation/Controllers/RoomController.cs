@@ -8,10 +8,12 @@ using System.Linq;
 public class RoomController : Controller
 {
     private readonly IRoomService _roomService;
+    private readonly ApplicationDbContext _dbContext;
 
-    public RoomController(IRoomService roomService)
+    public RoomController(IRoomService roomService, ApplicationDbContext dbContext)
     {
         _roomService = roomService ?? throw new ArgumentNullException(nameof(roomService));
+        _dbContext = dbContext;
     }
 
     [HttpGet("all")]
@@ -21,27 +23,35 @@ public class RoomController : Controller
         return View(rooms);
     }
 
-    //public bool IsRoomAvailable(Room room, DateTime checkIn, DateTime checkOut)
-    //{
-    //    // Check if there are any reservations that overlap with the specified dates
-    //    return !room.Reservations.Any(r => (checkIn < r.CheckOut && checkOut > r.CheckIn));
-    //}
+    [HttpGet("details/{id}")]
+    public async Task<IActionResult> RoomDetails(int id)
+    {
+        var room = await _roomService.GetRoomById(id);
 
-    // Action to display all rooms for regular users with availability check
-    //[HttpGet]
-    //public IActionResult AllRoomsAvailability(DateTime? checkIn, DateTime? checkOut)
-    //{
-    //    // Retrieve all rooms from the database
-    //    var rooms = dbContext.Rooms.ToList();
+        if (room == null)
+        {
+            return NotFound();
+        }
 
-    //    // Check availability for each room based on the specified dates
-    //    if (checkIn.HasValue && checkOut.HasValue)
-    //    {
-    //        rooms = rooms.Where(room => IsRoomAvailable(room, checkIn.Value, checkOut.Value)).ToList();
-    //    }
+        return View(room);
+    }
 
-    //    // Pass the list of rooms to the view
-    //    return View("AllRooms", rooms);
-    //}
+    [HttpPost]
+    public IActionResult ReserveRoom(int roomId, DateTime fromDate, DateTime toDate)
+    {
+        // Perform validation and add the reservation to the database
+        var reservation = new Reservation
+        {
+            RoomId = roomId,
+            StartDate = DateTime.SpecifyKind(fromDate, DateTimeKind.Utc),
+            EndDate = DateTime.SpecifyKind(toDate, DateTimeKind.Utc)
+        };
+
+        _dbContext.Reservations.Add(reservation);
+        _dbContext.SaveChanges();
+
+        return Json(new { success = true });
+    }
+
 }
 
