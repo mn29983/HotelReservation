@@ -85,7 +85,8 @@ namespace HotelReservation.Migrations
                     PictureUrl3 = table.Column<string>(type: "text", nullable: false),
                     Available = table.Column<bool>(type: "boolean", nullable: false),
                     AvailableFrom = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    AvailableTo = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    AvailableTo = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Amenities = table.Column<int[]>(type: "integer[]", nullable: false)
                 },
                 constraints: table =>
                 {

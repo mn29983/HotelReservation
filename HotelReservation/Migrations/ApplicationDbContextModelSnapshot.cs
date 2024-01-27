@@ -127,6 +127,10 @@ namespace HotelReservation.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RoomId"));
 
+                    b.Property<int[]>("Amenities")
+                        .IsRequired()
+                        .HasColumnType("integer[]");
+
                     b.Property<bool>("Available")
                         .HasColumnType("boolean");
 

@@ -1,5 +1,40 @@
 ﻿@model HotelReservation.Models.Room
 
+<script>
+    $(function () {
+        var dateFormat = "dd-mm-yy"; // Update the date format
+
+        var from = $("#from").datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            numberOfMonths: 3,
+            dateFormat: dateFormat // Set the date format
+        }).on("change", function () {
+            to.datepicker("option", "minDate", getDate(this));
+        });
+
+        var to = $("#to").datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            numberOfMonths: 3,
+            dateFormat: dateFormat // Set the date format
+        }).on("change", function () {
+            from.datepicker("option", "maxDate", getDate(this));
+        });
+
+        function getDate(element) {
+            var date;
+            try {
+                date = $.datepicker.parseDate(dateFormat, element.value);
+            } catch (error) {
+                date = null;
+            }
+
+            return date;
+        }
+    });
+</script>
+
 <h2>Room Details</h2>
 
 <div class="container mt-4">
@@ -43,32 +78,41 @@
                     </p>
                 </div>
             </div>
+            <h4>Amenities:</h4>
+            <ul>
+                @foreach (var amenity in Model.Amenities)
+                {
+                    <li>@Enum.GetName(typeof(HotelReservation.Models.Amenities), amenity)</li>
+                }
+            </ul>
 
             <!-- Date Pickers -->
-            <div class="mt-4">
-                <label for="fromDate">From Date:</label>
-                <input type="date" id="fromDate" name="fromDate" min="@DateTime.Now.ToString("yyyy-MM-dd")">
+             @if (User.Identity.IsAuthenticated)
+            {
+                <div class="mt-4">
+                    <label for="from">From Date:</label>
+                <input type="text" id="from" name="from" min="@DateTime.Now.ToString("dd-MM-yyyy")">
 
-                <label for="toDate" class="ml-4">To Date:</label>
-                <input type="date" id="toDate" name="toDate" min="@DateTime.Now.ToString("yyyy-MM-dd")">
+                <label for="to">To Date:</label>
+                <input type="text" id="to" name="to" min="@DateTime.Now.ToString("dd-MM-yyyy")">
 
                 <button id="reserveButton" class="btn btn-primary ml-4">Reserve Room</button>
             </div>
+            }
         </div>
     </div>
 </div>
-
 <script>
     $(document).ready(function () {
         $('#reserveButton').on('click', function () {
-            var fromDate = $('#fromDate').val();
-            var toDate = $('#toDate').val();
+            var from = $('#from').val();
+            var to = $('#to').val();
 
             // Send the selected dates to the server for reservation
             $.ajax({
                 type: 'POST',
                 url: '/Room/ReserveRoom',
-                data: { roomId: @Model.RoomId, fromDate: fromDate, toDate: toDate },
+                data: { roomId: @Model.RoomId, from: from, to: to },
                 success: function (result) {
                     // Handle success, e.g., show a success message
                     console.log(result);

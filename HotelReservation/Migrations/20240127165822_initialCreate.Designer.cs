@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HotelReservation.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240126183808_initialCreate")]
+    [Migration("20240127165822_initialCreate")]
     partial class initialCreate
     {
         /// <inheritdoc />
@@ -129,6 +129,10 @@ namespace HotelReservation.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RoomId"));
+
+                    b.Property<int[]>("Amenities")
+                        .IsRequired()
+                        .HasColumnType("integer[]");
 
                     b.Property<bool>("Available")
                         .HasColumnType("boolean");

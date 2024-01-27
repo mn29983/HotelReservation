@@ -37,14 +37,14 @@ public class RoomController : Controller
     }
 
     [HttpPost]
-    public IActionResult ReserveRoom(int roomId, DateTime fromDate, DateTime toDate)
+    public IActionResult ReserveRoom(int roomId, DateTime from, DateTime to)
     {
         // Perform validation and add the reservation to the database
         var reservation = new Reservation
         {
             RoomId = roomId,
-            StartDate = DateTime.SpecifyKind(fromDate, DateTimeKind.Utc),
-            EndDate = DateTime.SpecifyKind(toDate, DateTimeKind.Utc)
+            StartDate = DateTime.SpecifyKind(from, DateTimeKind.Utc),
+            EndDate = DateTime.SpecifyKind(to, DateTimeKind.Utc)
         };
 
         _dbContext.Reservations.Add(reservation);

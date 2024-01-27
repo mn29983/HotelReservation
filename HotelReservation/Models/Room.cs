@@ -4,6 +4,20 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HotelReservation.Models
 {
+
+    public enum Amenities
+    {
+        Toiletries,
+        WiFi,
+        TV,
+        AirConditioning,
+        MiniBar,
+        RoomService,
+        CoffeeMaker,
+        HairDryer,
+        NonSmoking,
+        FreeParking,
+    }
     public class Room
     {
         public int RoomId { get; set; }
@@ -43,5 +57,7 @@ namespace HotelReservation.Models
         [Display(Name = "Available To")]
         [DataType(DataType.Date)]
         public DateTime? AvailableTo { get; set; }
+
+        public List<Amenities> Amenities { get; set; }
     }
 }

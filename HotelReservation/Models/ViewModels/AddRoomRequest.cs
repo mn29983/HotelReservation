@@ -1,4 +1,6 @@
-﻿namespace HotelReservation.Models.ViewModels
+﻿using HotelReservation.Models;
+
+namespace HotelReservation.Models.ViewModels
 {
     public class AddRoomRequest
     {
@@ -16,9 +18,6 @@
 
         public bool Available { get; set; }
 
-        public DateTime AvailableFrom { get; set; }
-        public DateTime AvailableTo { get; set; }
-
-
+        public List<Amenities> Amenities { get; set; }
     }
 }
