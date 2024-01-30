@@ -2,8 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using HotelReservation.Models;
 using HotelReservation.Services.Interfaces;
-using HotelReservation.Services;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 public class RoomController : Controller
 {
@@ -54,4 +55,3 @@ public class RoomController : Controller
     }
 
 }
-

@@ -5,11 +5,12 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using HotelReservation.Repository.Interfaces;
+using HotelReservation.Models;
 
 public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 {
-    private readonly ApplicationDbContext _context;
-    private readonly DbSet<TEntity> _dbSet;
+    protected readonly ApplicationDbContext _context;
+    protected readonly DbSet<TEntity> _dbSet;
 
     public Repository(ApplicationDbContext context)
     {

@@ -17,7 +17,6 @@ namespace HotelReservation.Models.ViewModels
         public string PictureUrl3 { get; set; }
 
         public bool Available { get; set; }
-
         public List<Amenities> Amenities { get; set; }
     }
 }

@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<HotelReservation.Models.Room>
 
-<h2>All Rooms</h2>
+<h2>Available Rooms</h2>
 
 <div class="row row-cols-1 row-cols-md-4 g-4">
-    @foreach (var room in Model)
+    @foreach (var room in Model.Where(r => r.Available))
     {
         <div class="col">
             <div class="card h-100 d-flex flex-column">
@@ -16,7 +16,6 @@
                         Description: @room.Description <br />
                         Capacity: @room.Capacity <br />
                         Price: @room.Price <br />
-                        Available: @room.Available
                     </p>
                 </div>
                 <div class="card-footer">
