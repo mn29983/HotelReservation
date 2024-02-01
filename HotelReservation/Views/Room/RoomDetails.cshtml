@@ -3,67 +3,6 @@
 @{
     ViewData["Title"] = "Room Details";
 }
-
-<script>
-    $(function () {
-        var dateFormat = "dd-mm-yy";
-        var today = new Date();
-
-        var from = $("#from").datepicker({
-            defaultDate: "+1w",
-            changeMonth: true,
-            numberOfMonths: 3,
-            dateFormat: dateFormat,
-            minDate: today,
-            onSelect: function (selectedDate) {
-                to.datepicker("option", "minDate", selectedDate);
-            }
-        });
-
-        var to = $("#to").datepicker({
-            defaultDate: "+1w",
-            changeMonth: true,
-            numberOfMonths: 3,
-            dateFormat: dateFormat,
-            minDate: today,
-            onSelect: function (selectedDate) {
-                from.datepicker("option", "maxDate", selectedDate);
-            }
-        });
-
-        var roomId = @Model.RoomId;
-        $.ajax({
-            type: 'GET',
-            url: '/Reservation/GetReservedDates',
-            data: { roomId: roomId },
-            success: function (reservedDates) {
-                from.datepicker("option", "beforeShow", function (input, inst) {
-                    return {
-                        minDate: today, maxDate: to.datepicker("getDate"),
-                        beforeShowDay: function (date) {
-                            var stringDate = $.datepicker.formatDate(dateFormat, date);
-                            return [reservedDates.indexOf(stringDate) == -1];
-                        }
-                    };
-                });
-
-                to.datepicker("option", "beforeShow", function (input, inst) {
-                    return {
-                        minDate: from.datepicker("getDate"), maxDate: today,
-                        beforeShowDay: function (date) {
-                            var stringDate = $.datepicker.formatDate(dateFormat, date);
-                            return [reservedDates.indexOf(stringDate) == -1];
-                        }
-                    };
-                });
-            },
-            error: function (error) {
-                console.error(error);
-            }
-        });
-    });
-</script>
-
 <h2>Room Details</h2>
 
 <div class="container mt-4">
@@ -112,37 +51,8 @@
             </ul>
             @if (User.Identity.IsAuthenticated)
             {
-                <div class="mt-4">
-                    <label for="from">From Date:</label>
-                    <input type="text" id="from" name="from" min="@DateTime.Now.ToString("dd-MM-yyyy")">
-
-                    <label for="to">To Date:</label>
-                    <input type="text" id="to" name="to" min="@DateTime.Now.ToString("dd-MM-yyyy")">
-
-                    <button id="reserveButton" class="btn btn-primary ml-4">Reserve Room</button>
-                </div>
+                <a asp-action="Booking" asp-controller="Room" asp-route-roomId="@Model.RoomId" class="btn btn-primary ml-4">Reserve Room</a>
             }
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function () {
-        $('#reserveButton').on('click', function () {
-            var from = $('#from').val();
-            var to = $('#to').val();
-
-            $.ajax({
-                type: 'POST',
-                url: '/Room/ReserveRoom',
-                data: { roomId: @Model.RoomId, from: from, to: to },
-                success: function (result) {
-                    console.log(result);
-                },
-                error: function (error) {
-                    console.error(error);
-                }
-            });
-        });
-    });
-</script>

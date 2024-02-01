@@ -1,0 +1,319 @@
+﻿<!-- Booking.cshtml -->
+@{
+    ViewData["Title"] = "Booking";
+}
+<script>
+    $(function () {
+        var dateFormat = "dd-mm-yy";
+        var today = new Date();
+
+        var from = $("#from").datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            numberOfMonths: 2,
+            dateFormat: dateFormat,
+            minDate: today,
+            onSelect: function (selectedDate) {
+                to.datepicker("option", "minDate", selectedDate);
+            }
+        });
+
+        var to = $("#to").datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            numberOfMonths: 2,
+            dateFormat: dateFormat,
+            minDate: today,
+            onSelect: function (selectedDate) {
+                from.datepicker("option", "maxDate", selectedDate);
+            }
+        });
+
+        var to = $("#expiryDate").datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            numberOfMonths: 2,
+            dateFormat: dateFormat,
+            minDate: today,
+            onSelect: function (selectedDate) {
+                from.datepicker("option", "maxDate", selectedDate);
+            }
+        });
+
+        var roomId = @((Model != null && Model.RoomId != null) ? Model.RoomId : -1);
+        if (roomId !== -1) {
+            $.ajax({
+                type: 'GET',
+                url: '/Reservation/GetReservedDates',
+                data: { roomId: roomId },
+                success: function (reservedDates) {
+                    from.datepicker("option", "beforeShowDay", function (date) {
+                        var stringDate = $.datepicker.formatDate(dateFormat, date);
+                        return [reservedDates.indexOf(stringDate) == -1];
+                    });
+
+                    to.datepicker("option", "beforeShowDay", function (date) {
+                        var stringDate = $.datepicker.formatDate(dateFormat, date);
+                        return [reservedDates.indexOf(stringDate) == -1];
+                    });
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        }
+    });
+</script>
+
+<style>
+    #reservationForm {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background-color: #202528;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #4caf50;
+        color: white;
+        padding: 15px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+    #termsModal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
+        padding-top: 60px;
+    }
+
+    #termsModalContent {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+</style>
+
+<form asp-action="ReserveRoom" asp-controller="Room" id="reservationForm" method="post">
+    <h2 class="text-center">Reserve Room</h2>
+
+    <div class="form-group row">
+        <div class="col">
+            <label for="name">First Name:</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+        </div>
+        <div class="col">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" class="form-control" required>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+        </div>
+        <div class="col">
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" class="form-control" required>
+        </div>
+    </div>
+
+    <div class="form-group row">
+            <div class="col">
+                <label for="from">Arrival date:</label>
+                <input type="text" id="from" name="from" class="datepicker" min="@DateTime.Now.ToString("dd-MM-yyyy")" required>
+            </div>
+            <div class="col">
+@*                 <label for="arrivalTime">Arrival time:</label>
+                <select class="form-control" id="arrivalTime" name="arrivalTime">
+                    <option value="12:00">12:00</option>
+                    <option value="13:00">13:00</option>
+                    <option value="14:00">14:00</option>
+                    <option value="15:00">15:00</option>
+                    <option value="16:00">16:00</option>
+                    <option value="17:00">17:00</option>
+                    <option value="18:00">18:00</option>
+                    <option value="19:00">19:00</option>
+                    <option value="20:00">20:00</option>
+                    <option value="21:00">21:00</option>
+                    <option value="22:00">22:00</option>
+                </select> *@
+            </div>
+        </div>
+    <div class="form-group row">
+            <div class="col">
+                <label for="to">Departure date:</label>
+                <input type="text" id="to" name="to" class="datepicker" min="@DateTime.Now.ToString("dd-MM-yyyy")" required>
+            </div>
+            <div class="col">
+@*             <label for="deparuteTime">Departure time:</label>
+                <select class="form-control" id="deparuteTime" name="deparuteTime">
+                    <option value="12:00">12:00</option>
+                    <option value="13:00">13:00</option>
+                    <option value="14:00">14:00</option>
+                    <option value="15:00">15:00</option>
+                    <option value="16:00">16:00</option>
+                    <option value="17:00">17:00</option>
+                    <option value="18:00">18:00</option>
+                    <option value="19:00">19:00</option>
+                    <option value="20:00">20:00</option>
+                    <option value="21:00">21:00</option>
+                    <option value="22:00">22:00</option>
+                </select> *@
+            </div>
+        </div>
+        <h3>Billing Information</h3>
+    <div class="form-group row">
+            <div class="col">
+                <label for="cardName">Cardholder Name:</label>
+                <input type="text" id="cardName" name="cardName" required>
+            </div>
+            <div class="col">
+                <label for="cardNumber">Card Number:</label>
+                <input type="text" id="cardNumber" name="cardNumber" required>
+            </div>
+        </div>
+    <div class="form-group row">
+            <div class="col">
+                <label for="expiryDate">Expiration Date:</label>
+                <input type="text" id="expiryDate" name="expiryDate" class="datepicker" min="@DateTime.Now.ToString("dd-MM-yyyy")" required>
+            </div>
+            <div class="col">
+                <label for="cvv">CVV:</label>
+                <input type="password" id="cvv" name="cvv" required>
+            </div>
+        </div>
+    <div class="form-group">
+            <div class="col">
+                <label for="specialRequests">Special Requests:</label>
+                <textarea id="specialRequests" name="specialRequests" rows="4" cols="50"></textarea>
+            </div>
+        </div>
+    <div class="row">
+            <div class="col">
+                <input type="checkbox" class="form-check-input" id="agreeTerms" name="agreeTerms" required>
+                <label class="form-check-label" for="agreeTerms">I agree to the <a href="#" onclick="showTerms()">Terms and Conditions</a></label>
+            </div>
+        </div>
+        <button type="button" onclick="reserveRoom()">Reserve Room</button>
+    </div>
+</form>
+
+<div id="termsModal">
+    <div id="termsModalContent">
+        <h4>Terms and Conditions</h4>
+        <p>By making this reservation, you agree to abide by all hotel policies and regulations.</p>
+        <p>Any damages to the room or hotel property will be charged to your credit card.</p>
+        <div class="modal-footer">
+            <p>Click outside the box to close.</p>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        function reserveRoom() {
+            var roomId = $("#roomId").val();
+            var from = $('#from').val();
+            var to = $('#to').val();
+            var name = $('#name').val();
+            var lastName = $('#lastName').val();
+            var email = $('#email').val();
+            var phone = $('#phone').val();
+            var cardName = $('#cardName').val();
+            var cardNumber = $('#cardNumber').val();
+            var expiryDate = $('#expiryDate').val();
+            var cvv = $('#cvv').val();
+            var specialRequests = $('#specialRequests').val();
+            var agreeTerms = $('#agreeTerms').prop('checked');
+
+            $.ajax({
+                type: 'POST',
+                url: '/Room/ReserveRoom',
+                data: {
+                    roomId: roomId,
+                    from: from,
+                    to: to,
+                    name: name,
+                    lastName: lastName,
+                    email: email,
+                    phone: phone,
+                    cardName: cardName,
+                    cardNumber: cardNumber,
+                    expiryDate: expiryDate,
+                    cvv: cvv,
+                    specialRequests: specialRequests,
+                    agreeTerms: agreeTerms
+                },
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        }
+
+        // Initialize datepickers
+        $('.datepicker').datepicker({
+            dateFormat: "dd-mm-yy",
+            changeMonth: true,
+            numberOfMonths: 3,
+            minDate: new Date()
+        });
+
+        function showTerms() {
+            $('#termsModal').css('display', 'block');
+        }
+
+        // Close modal when clicking outside of it
+        $(window).click(function (e) {
+            if (e.target.id === 'termsModal') {
+                $('#termsModal').css('display', 'none');
+            }
+        });
+    </script>
+}

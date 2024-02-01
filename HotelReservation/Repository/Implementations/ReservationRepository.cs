@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using HotelReservation.Models;
+using HotelReservation.Models.Reservations;
 using HotelReservation.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 

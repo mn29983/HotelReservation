@@ -18,7 +18,6 @@ html {
 }
 
 body {
-    margin-bottom: 60px;
     background-color: #202528;
     color:aliceblue;
 }
@@ -102,3 +101,7 @@ body {
         width: auto; /* Make sure the checkbox is not too wide */
         margin-right: 5px; /* Add some space between the checkbox and label */
     }
+
+#termsModal{
+    color :black;
+}

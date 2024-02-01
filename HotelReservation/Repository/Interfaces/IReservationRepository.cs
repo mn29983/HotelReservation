@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using HotelReservation.Models;
+using HotelReservation.Models.Reservations;
 
 namespace HotelReservation.Repository.Interfaces
 {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HotelReservation.Models;
+using HotelReservation.Models.Reservations;
 using HotelReservation.Services.Interfaces;
 using System;
 using System.Linq;
@@ -37,21 +38,59 @@ public class RoomController : Controller
         return View(room);
     }
 
-    [HttpPost]
-    public IActionResult ReserveRoom(int roomId, DateTime from, DateTime to)
+    [HttpGet("booking/{roomId}")]
+    public IActionResult Booking(int roomId)
     {
-        // Perform validation and add the reservation to the database
+        ViewBag.RoomId = roomId;
+        return View();
+    }
+
+
+    [HttpPost]
+    public IActionResult ReserveRoom(int roomId, string from, string to, string name, string lastName, string email, string phone, string cardName, string cardNumber, string expiryDate, string cvv, string specialRequests, bool agreeTerms)
+    {
+        if (string.IsNullOrEmpty(cardName))
+        {
+            return Json(new { success = false, message = "CardName cannot be null or empty." });
+        }
+
+        if (!DateTime.TryParse(from, out DateTime fromDate) || !DateTime.TryParse(to, out DateTime toDate) || !DateTime.TryParse(expiryDate, out DateTime expiryDateValue))
+        {
+            return Json(new { success = false, message = "Invalid date format." });
+        }
+
         var reservation = new Reservation
         {
             RoomId = roomId,
-            StartDate = DateTime.SpecifyKind(from, DateTimeKind.Utc),
-            EndDate = DateTime.SpecifyKind(to, DateTimeKind.Utc)
+            StartDate = fromDate.ToUniversalTime(),
+            EndDate = toDate.ToUniversalTime(),
+            SpecialRequests = specialRequests
         };
 
-        _dbContext.Reservations.Add(reservation);
-        _dbContext.SaveChanges();
+        var guest = new Guest
+        {
+            Name = name,
+            LastName = lastName,
+            Email = email,
+            Phone = phone
+        };
 
-        return Json(new { success = true });
+        var billingInfo = new BillingInfo
+        {
+            CardName = cardName,
+            CardNumber = cardNumber,
+            ExpiryDate = expiryDateValue.ToUniversalTime(),
+            CVV = cvv
+        };
+
+        reservation.Guest = guest;
+        reservation.BillingInfo = billingInfo;
+
+
+            _dbContext.Reservations.Add(reservation);
+            _dbContext.SaveChanges();
+            return Json(new { success = true });
+
     }
 
 }

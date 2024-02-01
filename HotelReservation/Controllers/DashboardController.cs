@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using HotelReservation.Models.Reservations;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelReservation.Controllers
