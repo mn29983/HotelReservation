@@ -7,7 +7,7 @@
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        public string SpecialRequests { get; set; }
+        public string? SpecialRequests { get; set; }
 
         public Guest Guest { get; set; }
         public BillingInfo BillingInfo { get; set; }

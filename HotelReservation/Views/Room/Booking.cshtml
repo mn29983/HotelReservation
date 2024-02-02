@@ -134,6 +134,11 @@
         border: 1px solid #888;
         width: 80%;
     }
+
+    #errorMessages {
+        color: red;
+        margin-bottom: 10px;
+    }
 </style>
 
 <form asp-action="ReserveRoom" asp-controller="Room" id="reservationForm" method="post">
@@ -238,6 +243,7 @@
                 <label class="form-check-label" for="agreeTerms">I agree to the <a href="#" onclick="showTerms()">Terms and Conditions</a></label>
             </div>
         </div>
+        <div id="errorMessages"></div>
         <button type="button" onclick="reserveRoom()">Reserve Room</button>
     </div>
 </form>
@@ -256,6 +262,13 @@
 
 @section scripts {
     <script>
+        function showErrorMessage(message) {
+            $('#errorMessages').text(message);
+        }
+
+        function clearErrorMessages() {
+            $('#errorMessages').text('');
+        }
         var roomId = @roomId;
 
         function reserveRoom() {
@@ -271,6 +284,11 @@
             var cvv = $('#cvv').val();
             var specialRequests = $('#specialRequests').val();
             var agreeTerms = $('#agreeTerms').prop('checked');
+
+            if (!name || !lastName || !email || !phone || !cardName || !cardNumber || !expiryDate || !cvv || !agreeTerms) {
+                showErrorMessage("Please fill out all required fields.");
+                return;
+            }
 
             $.ajax({
                 type: 'POST',

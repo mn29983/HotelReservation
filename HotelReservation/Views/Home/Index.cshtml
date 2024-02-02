@@ -3,11 +3,17 @@
 }
 
 <style>
+    .container {
+        position: relative;
+        z-index: 1; /* Set a higher z-index for the container */
+    }
+
     .image-container {
         position: relative;
         width: 100%;
         height: 700px; /* Set the desired height for your image */
         overflow: hidden;
+        z-index: 0; /* Set a lower z-index for the image container */
     }
 
         .image-container img {
@@ -20,17 +26,128 @@
         text-align: center;
         color: #ffffff; /* Set text color to contrast with the background */
     }
-    .py-3{
-        padding:0px;
+
+    .py-3 {
+        padding: 0px;
         padding-top: 0px !important;
     }
+
+    .search-container {
+        background-color: #856049;
+        padding: 20px;
+        color: black;
+        font-size: 15px;
+        font-weight: bold;
+        border: 2px solid black;
+        border-radius: 10px;
+        margin-top: -150px;
+    }
+
+        .search-container input,
+        .search-container select,
+        .search-container button {
+            margin: 5px;
+            display: block; /* Ensure each input is on a new line */
+            width: 100%; /* Make inputs full width */
+            box-sizing: border-box; /* Include padding and border in the width */
+        }
+
+        .search-container label {
+            position: relative;
+            top: 0;
+            left: 0;
+            padding: 5px;
+            pointer-events: none;
+        }
+
+    .bodycontainer {
+        background-color: #f2f2f2;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        margin-top: 20px;
+        color: black;
+        text-align: center;
+        width: 60%;
+        box-sizing: border-box;
+    }
+
 </style>
 
 <div class="image-container">
     <img src="~/images/bg.png" alt="Description of the image" class="img-fluid" />
 </div>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<div class="container search-container">
+    <form action="All" method="get">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="checkin">Arrival:</label>
+                <input type="date" id="checkin" name="checkin" required readonly />
+            </div>
+            <div class="col-md-4">
+                <label for="checkout">Departure:</label>
+                <input type="date" id="checkout" name="checkout" required readonly />
+            </div>
+            <div class="col-md-4">
+                <label for="guests">1 Guest:</label>
+                <select id="guests" name="guests" required>
+                    <option value="1">1 Guest</option>
+                    <option value="2">2 Guests</option>
+                    <option value="3">3 Guests</option>
+                    <option value="4">4 Guests</option>
+                    <option value="5">5 Guests</option>
+                    <option value="6">6 Guests</option>
+                    <option value="7">7 Guests</option>
+                    <option value="8">8 Guests</option>
+                    <option value="9">9 Guests</option>
+                    <option value="10">10 Guests</option>
+                    <option value="11">11 Guests</option>
+                    <option value="12">12 Guests</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container bodycontainer">
+    <div class="row">
+        <div class="col-md-12">
+            <header>
+                <h1>Refresh. Relax. Dry Mountain Inn.</h1>
+                <p>Your tranquil getaway in the heart of Chelopek village.</p>
+            </header>
+
+            <section>
+                <h2>Location</h2>
+                <p>Nestled in the mountains of the charming village of Chelopek, Dry Mountain Inn offers a serene escape surrounded by nothing but woods and trees. Experience the beauty of nature at its finest.</p>
+            </section>
+
+            <section>
+                <h2>Accommodations</h2>
+                <p>Our rooms are small, cozy, and designed for ultimate tranquility. Enjoy a quiet retreat in the midst of nature, where every detail is crafted to provide comfort and relaxation.</p>
+            </section>
+
+            <section>
+                <h2>Pet-Friendly Haven</h2>
+                <p>At Dry Mountain Inn, we welcome all pets with open arms. There's no pet policy because we understand that your furry friends are an essential part of your journey. Bring them along to share the serenity of our mountain retreat.</p>
+            </section>
+
+            <section>
+                <h2>Dining Delights</h2>
+                <p>Indulge in culinary delights at our in-house restaurant located right under the hotel. Experience a blend of flavors that complement the natural charm of the surroundings. A dining experience that adds to the tranquility of your stay.</p>
+            </section>
+
+            <section>
+                <h2>Special Offers</h2>
+                <p>Currently, we don't have any special offers. Our focus is on providing a peaceful retreat for our guests, surrounded by the untouched beauty of Chelopek village.</p>
+            </section>
+        </div>
+    </div>
 </div>

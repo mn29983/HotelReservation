@@ -19,10 +19,20 @@ public class RoomController : Controller
     }
 
     [HttpGet("all")]
-    public async Task<IActionResult> AllRooms()
+    public async Task<IActionResult> AllRooms(int? guests)
     {
-        var rooms = await _roomService.GetAllRooms();
-        return View(rooms);
+        IEnumerable<Room> rooms = await _roomService.GetAllRooms();
+
+        // Check if guests parameter is provided
+        if (guests.HasValue)
+        {
+            // Filter rooms based on provided guests
+            rooms = rooms.Where(r => r.Capacity >= guests.Value);
+        }
+
+        var roomList = rooms.ToList();
+
+        return View(roomList);
     }
 
     [HttpGet("details/{id}")]
@@ -47,7 +57,7 @@ public class RoomController : Controller
 
 
     [HttpPost]
-    public IActionResult ReserveRoom(int roomId, string from, string to, string name, string lastName, string email, string phone, string cardName, string cardNumber, string expiryDate, string cvv, string specialRequests, bool agreeTerms)
+    public IActionResult ReserveRoom(int roomId, string from, string to, string name, string lastName, string email, string phone, string cardName, string cardNumber, string expiryDate, string cvv, string? specialRequests, bool agreeTerms)
     {
         if (string.IsNullOrEmpty(cardName))
         {
@@ -64,7 +74,7 @@ public class RoomController : Controller
             RoomId = roomId,
             StartDate = fromDate.ToUniversalTime(),
             EndDate = toDate.ToUniversalTime(),
-            SpecialRequests = specialRequests
+            SpecialRequests = specialRequests,
         };
 
         var guest = new Guest
