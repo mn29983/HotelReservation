@@ -26,7 +26,11 @@ namespace HotelReservation.Controllers
 
         public IActionResult AllReservations()
         {
-            var reservations = _dbContext.Reservations.ToList();
+            var reservations = _dbContext.Reservations
+                .Include(r => r.Guest)
+                .Include(r => r.BillingInfo)
+                .ToList();
+
             return View(reservations);
         }
     }

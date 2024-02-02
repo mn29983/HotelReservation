@@ -1,6 +1,7 @@
 ﻿<!-- Booking.cshtml -->
 @{
     ViewData["Title"] = "Booking";
+    var roomId = ViewBag.RoomId;
 }
 <script>
     $(function () {
@@ -255,8 +256,9 @@
 
 @section scripts {
     <script>
+        var roomId = @roomId;
+
         function reserveRoom() {
-            var roomId = $("#roomId").val();
             var from = $('#from').val();
             var to = $('#to').val();
             var name = $('#name').val();
