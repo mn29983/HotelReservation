@@ -10,7 +10,6 @@ using Microsoft.OpenApi.Models;
 using Npgsql.NodaTime;
 using HotelReservation.Models;
 using HotelReservation.Repository.Interfaces;
-using HotelReservation.Repository.Implementations;
 using HotelReservation.Services.Implementations;
 using HotelReservation.Services.Interfaces;
 using Npgsql;
@@ -34,9 +33,6 @@ namespace HotelReservation
 
             builder.Services.AddScoped<IRepository<Room>, Repository<Room>>();
             builder.Services.AddScoped<IRoomService, RoomService>();
-
-            builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
-            builder.Services.AddScoped<IReservationService, ReservationService>();
 
 
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
