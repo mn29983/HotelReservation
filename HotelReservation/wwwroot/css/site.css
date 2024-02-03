@@ -49,6 +49,7 @@ body {
     width: 300px;
 }
 
+
 /* Style for the form container */
 .form-container {
     max-width: 500px; /* Adjust the maximum width as per your preference */
@@ -105,3 +106,10 @@ body {
 #termsModal{
     color :black;
 }
+
+
+.custom-checkbox {
+    width: auto !important; /* Adjust the width as needed */
+    margin-right: 5px; /* Add some spacing to separate the checkbox from the label */
+}
+

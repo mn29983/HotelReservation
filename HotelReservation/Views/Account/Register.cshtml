@@ -8,9 +8,9 @@
     ViewData["Title"] = "Register";
 }
 
-<section class="vh-100" style="background-color: #9A616D;">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
+<section @* class="vh-100" *@ style="background-color: #202528;">
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center align-items-center h-50">
             <div class="col col-xl-10">
                 <div class="card" style="border-radius: 1rem;">
                     <div class="row g-0">
@@ -23,12 +23,7 @@
 
                                 <form asp-action="Register" method="post">
 
-                                    <div class="d-flex align-items-center mb-3 pb-1">
-                                        <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
-                                        <span class="h1 fw-bold mb-0">Logo</span>
-                                    </div>
-
-                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
+                                    <h5>Register an account</h5>
 
                                     <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -81,14 +76,10 @@
                                     <div class="pt-1 mb-4">
                                         <button type="submit" class="btn btn-dark btn-lg btn-block">Login</button>
                                     </div>
-
-                                    <a class="small text-muted" href="#!">Forgot password?</a>
-                                    <p class="mb-5 pb-lg-2" style="color: #393f81;">
-                                        Don't have an account? <a href="#!"
-                                                                  style="color: #393f81;">Register here</a>
+                                        <a class="small" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy policy</a>
+                                    <p class="mb-5 pb-lg-2" style="color: black;">
+                                        Already have an account? <a asp-area="" asp-controller="Account" asp-action="Login" style="color: red;">Sign in</a>
                                     </p>
-                                    <a href="#!" class="small text-muted">Terms of use.</a>
-                                    <a href="#!" class="small text-muted">Privacy policy</a>
                                 </form>
 
 

@@ -6,53 +6,58 @@
 <h2>Room Details</h2>
 
 <div class="container mt-4">
-    <div class="row">
-        <div class="col-md-6">
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="@Model.PictureUrl1" class="d-block w-100" alt="First Picture">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="@Model.PictureUrl2" class="d-block w-100" alt="Second Picture">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="@Model.PictureUrl3" class="d-block w-100" alt="Third Picture">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="@Model.PictureUrl1" class="d-block w-100 h-100" alt="First Picture">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="@Model.PictureUrl2" class="d-block w-100 h-100" alt="Second Picture">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="@Model.PictureUrl3" class="d-block w-100 h-100" alt="Third Picture">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Room @Model.RoomNumber</h5>
-                    <p class="card-text">
+                <div class="col-md-6">
+                    <h5>Room @Model.RoomNumber</h5>
+                    <p>
                         Type: @Model.Type <br />
                         Description: @Model.Description <br />
                         Capacity: @Model.Capacity <br />
                         Price: @Model.Price <br />
                     </p>
+                    <div class="card" style="max-width: fit-content;">
+                        <div class="card-body">
+                            <h5 class="card-title">Amenities:</h5>
+                            <ul class="card-text">
+                                @foreach (var amenity in Model.Amenities)
+                                {
+                                    <li>@Enum.GetName(typeof(HotelReservation.Models.Amenities), amenity)</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="Booking" asp-controller="Room" asp-route-roomId="@Model.RoomId" class="btn btn-primary ml-4">Reserve Room</a>
+                    }
                 </div>
             </div>
-            <h4>Amenities:</h4>
-            <ul>
-                @foreach (var amenity in Model.Amenities)
-                {
-                    <li>@Enum.GetName(typeof(HotelReservation.Models.Amenities), amenity)</li>
-                }
-            </ul>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <a asp-action="Booking" asp-controller="Room" asp-route-roomId="@Model.RoomId" class="btn btn-primary ml-4">Reserve Room</a>
-            }
         </div>
     </div>
 </div>

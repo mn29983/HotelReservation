@@ -19,7 +19,7 @@
                     </p>
                 </div>
                 <div class="card-footer">
-                    <a href="@Url.Action("About", "Room", new { id = room.RoomId })" class="btn btn-primary">Learn more</a>
+                    <a href="@Url.Action("RoomDetails", "Room", new { id = room.RoomId })" class="btn btn-primary">Learn more</a>
                     <a asp-action="Update" asp-route-id="@room.RoomId" class="btn btn-primary">Edit</a>
                     <a asp-action="Delete" asp-route-id="@room.RoomId" class="btn btn-danger">Delete</a>
                 </div>
