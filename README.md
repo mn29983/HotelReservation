@@ -1,3 +1,4 @@
+<a name="readme-top"></a>
 <div align="center">
   <h3 align="center">Hotel Management System</h3>
 
@@ -25,16 +26,12 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#project-structure">Project Structure</a></li>
-    <li><a href="#technologies-used">Technologies Used</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
   </ol>
 </details>
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-Describe your hotel management system project, its features, and its purpose.
 
 ### Built With
 
@@ -70,7 +67,7 @@ This section will guide users on how to set up and run your hotel management sys
   dotnet ef database update
   ```
   #### This installation means the database is empty so there will be no Users and Rooms.
-  
+  <p align="right">(<a href="#readme-top">back to top</a>)</p>
 <!-- USAGE -->
 ## Usage
 
