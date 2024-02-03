@@ -3,15 +3,6 @@
 
   <p align="center">
     A comprehensive hotel management system built with ASP MVC .NET 7
-    <br />
-    <a href="#">Explore the documentation »</a>
-    <br />
-    <br />
-    <a href="#">View Demo</a>
-    ·
-    <a href="#">Report Bug</a>
-    ·
-    <a href="#">Request Feature</a>
   </p>
 </div>
 
@@ -89,7 +80,7 @@ Welcome to the Hotel Management System! This section will guide you through the 
 
 #### Creating a New Room
 1. In the Navigation bar, click on the "Add room" option.
-2. Fill in the required details such as room number, type, Description, Capacity, etc. 
+2. Fill in the required details such as room number, type, description, capacity, etc.
 3. Click the "Create" button to create a new room.
 
 #### Editing/Updating a Room
@@ -103,13 +94,13 @@ Welcome to the Hotel Management System! This section will guide you through the 
 
 #### View All Reservations
 1. In the Navigation bar, click on the "View All Reservations" option.
-2. It will Display all reservations made by the users.
+2. It will display all reservations made by the users.
 
 #### Users
 1. In the Navigation bar, click on the "User List" option.
-2. It will Display all Users that have made an Account.
-* Find the User you wish to delete and click on the "Delete" option.
-* Find the User you wish to change role and click on the "Make User / Make Admin" option.
+2. It will display all users that have made an account.
+   - Find the user you wish to delete and click on the "Delete" option.
+   - Find the user you wish to change the role and click on the "Make User / Make Admin" option.
 
 ### User Panel
 
@@ -121,13 +112,13 @@ Welcome to the Hotel Management System! This section will guide you through the 
 1. Follow the previous steps.
 2. Locate the room you want to view and click on the "Learn more" option.
 
-#### Booking a room
+#### Booking a Room
 1. Follow the previous steps.
 2. Click on the "Reserve Room" option.
-3. Fill in the required details such as Name, Email, Number, Arrival and Depaarture date, Billing Infromation, Special Request.
-4. Check the box to agree to the Terms and Conditions.
-* Clicking on the Terms and Conditions will pop up a box displaying all the Terms and Conditions
-5. Click the "Reserve Room" button to reserve the room and all infromation will be saved.
+3. Fill in the required details such as name, email, number, arrival and departure date, billing information, special request.
+4. Check the box to agree to the terms and conditions.
+   - Clicking on the terms and conditions will pop up a box displaying all the terms and conditions.
+5. Click the "Reserve Room" button to reserve the room, and all information will be saved.
 
 ## Additional Notes
 
