@@ -55,7 +55,8 @@ namespace HotelReservation.Controllers
 
             return View("Views/Dashboard/AdminRoom/Update.cshtml", room);
         }
-        [HttpPost]
+
+        [HttpPost("update/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(Room room)
         {
@@ -64,7 +65,8 @@ namespace HotelReservation.Controllers
                 await _roomService.UpdateRoom(room);
                 return RedirectToAction("AllRooms");
             }
-            return View("Views/Dashboard/AdminRoom/AllRooms.cshtml", room);
+            // Use the correct view for displaying errors
+            return View("Views/Dashboard/AdminRoom/Update.cshtml", room);
         }
 
         [HttpGet("delete/{id}")]
