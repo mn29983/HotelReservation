@@ -23,10 +23,8 @@ public class RoomController : Controller
     {
         IEnumerable<Room> rooms = await _roomService.GetAllRooms();
 
-        // Check if guests parameter is provided
         if (guests.HasValue)
         {
-            // Filter rooms based on provided guests
             rooms = rooms.Where(r => r.Capacity >= guests.Value);
         }
 
@@ -59,48 +57,54 @@ public class RoomController : Controller
     [HttpPost]
     public IActionResult ReserveRoom(int roomId, string from, string to, string name, string lastName, string email, string phone, string cardName, string cardNumber, string expiryDate, string cvv, string? specialRequests, bool agreeTerms)
     {
-        if (string.IsNullOrEmpty(cardName))
+        try
         {
-            return Json(new { success = false, message = "CardName cannot be null or empty." });
-        }
+            if (string.IsNullOrEmpty(cardName))
+            {
+                return Json(new { success = false, message = "CardName cannot be null or empty." });
+            }
 
-        if (!DateTime.TryParse(from, out DateTime fromDate) || !DateTime.TryParse(to, out DateTime toDate) || !DateTime.TryParse(expiryDate, out DateTime expiryDateValue))
-        {
-            return Json(new { success = false, message = "Invalid date format." });
-        }
+            if (!DateTime.TryParse(from, out DateTime fromDate) || !DateTime.TryParse(to, out DateTime toDate) || !DateTime.TryParse(expiryDate, out DateTime expiryDateValue))
+            {
+                return Json(new { success = false, message = "Invalid date format." });
+            }
 
-        var reservation = new Reservation
-        {
-            RoomId = roomId,
-            StartDate = fromDate.ToUniversalTime(),
-            EndDate = toDate.ToUniversalTime(),
-            SpecialRequests = specialRequests,
-        };
+            var reservation = new Reservation
+            {
+                RoomId = roomId,
+                StartDate = fromDate.ToUniversalTime(),
+                EndDate = toDate.ToUniversalTime(),
+                SpecialRequests = specialRequests,
+            };
 
-        var guest = new Guest
-        {
-            Name = name,
-            LastName = lastName,
-            Email = email,
-            Phone = phone
-        };
+            var guest = new Guest
+            {
+                Name = name,
+                LastName = lastName,
+                Email = email,
+                Phone = phone
+            };
 
-        var billingInfo = new BillingInfo
-        {
-            CardName = cardName,
-            CardNumber = cardNumber,
-            ExpiryDate = expiryDateValue.ToUniversalTime(),
-            CVV = cvv
-        };
+            var billingInfo = new BillingInfo
+            {
+                CardName = cardName,
+                CardNumber = cardNumber,
+                ExpiryDate = expiryDateValue.ToUniversalTime(),
+                CVV = cvv
+            };
 
-        reservation.Guest = guest;
-        reservation.BillingInfo = billingInfo;
+            reservation.Guest = guest;
+            reservation.BillingInfo = billingInfo;
 
 
             _dbContext.Reservations.Add(reservation);
             _dbContext.SaveChanges();
-            return Json(new { success = true });
 
+            return Json(new { success = true, message = "Room reserved successfully!" });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, message = $"Error: {ex.Message}" });
+        }
     }
-
 }

@@ -62,22 +62,18 @@
                                 </a>
                                 <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                                     <li class="w-100">
-                                        <a class="nav-link px-0 fs-5 text-white" asp-controller="AdminRoom" asp-action="Create"> <span class="d-none d-sm-inline">Add</span> room </a>
+                                        <a class="nav-link px-0 fs-5 text-white" asp-controller="AdminRoom" asp-action="AllRooms"> <span class="d-none d-sm-inline">All</span> Rooms </a>
                                     </li>
                                     <li>
-                                        <a class="nav-link px-0 fs-5 text-white" asp-controller="Dashboard" asp-action="Index"> <span class="d-none d-sm-inline">Dashboard</span> </a>
+                                        <a class="nav-link px-0 fs-5 text-white" asp-controller="AdminRoom" asp-action="Create"> <span class="d-none d-sm-inline">Add</span> room </a>
                                     </li>
                                     <li>
                                         <a class="nav-link px-0 fs-5 text-white" asp-action="AllReservations" asp-controller="Dashboard"> <span class="d-none d-sm-inline">View All Reservations</span></a>
                                     </li>
-
-
                                     <li>
                                         <a class="nav-link px-0 fs-5 text-white" asp-controller="Account" asp-action="ViewUsers"> <span class="d-none d-sm-inline">User</span> list </a>
                                     </li>
-                                    <li>
-                                        <a class="nav-link px-0 fs-5 text-white" asp-controller="AdminRoom" asp-action="AllRooms"> <span class="d-none d-sm-inline">All</span> Rooms </a>
-                                    </li>
+
                                 </ul>
                             </li>
                         }

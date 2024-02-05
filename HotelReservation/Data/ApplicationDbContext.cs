@@ -13,11 +13,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
 
     public DbSet<Room> Rooms { get; set; }
     public DbSet<Reservation> Reservations { get; set; }
-
     public DbSet<BillingInfo> BillingInfos { get; set; }
     public DbSet<Guest> Guests { get; set; }
 
-    public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -1,5 +1,4 @@
-﻿<!-- Booking.cshtml -->
-@{
+﻿@{
     ViewData["Title"] = "Booking";
     var roomId = ViewBag.RoomId;
 }
@@ -315,15 +314,19 @@
                     agreeTerms: agreeTerms
                 },
                 success: function (result) {
-                    console.log(result);
+                    if (result.success) {
+                        alert("Room reserved successfully!");
+
+                        window.location.href = '/';
+                    } else {
+                        showErrorMessage(result.message);
+                    }
                 },
                 error: function (error) {
                     console.error(error);
                 }
             });
         }
-
-        // Initialize datepickers
         $('.datepicker').datepicker({
             dateFormat: "dd-mm-yy",
             changeMonth: true,
@@ -335,7 +338,6 @@
             $('#termsModal').css('display', 'block');
         }
 
-        // Close modal when clicking outside of it
         $(window).click(function (e) {
             if (e.target.id === 'termsModal') {
                 $('#termsModal').css('display', 'none');

@@ -161,8 +161,6 @@ public class AccountController : Controller
         return View(usersWithRoles);
     }
 
-
-    // Make User
     [HttpPost]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> MakeUser(string userId)
@@ -182,8 +180,6 @@ public class AccountController : Controller
         return NotFound();
     }
 
-
-    // Make Admin
     [HttpPost]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> MakeAdmin(string userId)
@@ -204,8 +200,6 @@ public class AccountController : Controller
         return NotFound();
     }
 
-
-    // Delete User
     [HttpPost]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteUser(string userId)
@@ -218,18 +212,13 @@ public class AccountController : Controller
 
             if (result.Succeeded)
             {
-                // Handle success (e.g., redirect to user list)
                 return RedirectToAction("ViewUsers");
             }
             else
             {
-                // Handle errors
-                // You might want to display error messages or log the errors
-                return View("Error"); // You should create an error view
+                return View("Error");
             }
         }
-
-        // Handle case where the user was not found
         return NotFound();
     }
 }

@@ -65,7 +65,6 @@ namespace HotelReservation.Controllers
                 await _roomService.UpdateRoom(room);
                 return RedirectToAction("AllRooms");
             }
-            // Use the correct view for displaying errors
             return View("Views/Dashboard/AdminRoom/Update.cshtml", room);
         }
 
@@ -92,7 +91,6 @@ namespace HotelReservation.Controllers
             }
             catch (Exception)
             {
-                // Handle exceptions or show an error view
                 return StatusCode(500);
             }
         }

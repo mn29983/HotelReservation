@@ -7,18 +7,17 @@
     {
         <div class="col">
             <div class="card h-100 d-flex flex-column">
-                <img src="@room.PictureUrl1" class="card-img-top custom-img-size"
-                     alt="Picture" />
+                <img src="@room.PictureUrl1" class="card-img-top custom-img-size" alt="Picture" />
                 <div class="card-body flex-grow-1">
                     <h5 class="card-title">Room @room.RoomNumber</h5>
                     <p class="card-text">
-                        Type: @room.Type <br />
-                        Description: @room.Description <br />
-                        Capacity: @room.Capacity <br />
-                        Price: @room.Price <br />
+                        <strong>Type:</strong> <span class="text-warning">@room.Type</span> <br />
+                        <strong>Description:</strong> <span>@room.Description</span> <br />
                     </p>
                 </div>
                 <div class="card-footer">
+                    <strong>Capacity: <span>@room.Capacity</span> <br /> </strong>
+                    <strong>Price: <span class="text-danger">$@room.Price</span>$</strong> Per night.<br />
                     <a href="@Url.Action("RoomDetails", "Room", new { id = room.RoomId })" class="btn btn-primary">Learn more</a>
                 </div>
             </div>

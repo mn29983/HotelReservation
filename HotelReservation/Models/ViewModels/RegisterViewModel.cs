@@ -29,7 +29,6 @@ namespace HotelReservation.Models.ViewModels
 
         public IEnumerable<SelectListItem> AvailableRoles { get; set; }
 
-        // Constructor to initialize properties
         public RegisterViewModel()
         {
             AvailableRoles = new List<SelectListItem>();

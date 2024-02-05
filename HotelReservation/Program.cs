@@ -1,18 +1,11 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Npgsql.NodaTime;
 using HotelReservation.Models;
 using HotelReservation.Repository.Interfaces;
 using HotelReservation.Services.Implementations;
 using HotelReservation.Services.Interfaces;
-using Npgsql;
 
 namespace HotelReservation
 {
@@ -34,14 +27,11 @@ namespace HotelReservation
             builder.Services.AddScoped<IRepository<Room>, Repository<Room>>();
             builder.Services.AddScoped<IRoomService, RoomService>();
 
-
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
             builder.Services.AddAuthorization();
-
-
 
             builder.Services.AddSwaggerGen(c =>
             {
@@ -62,6 +52,8 @@ namespace HotelReservation
             var services = scope.ServiceProvider;
             var dbContext = services.GetRequiredService<ApplicationDbContext>();
             dbContext.Database.Migrate();
+
+            DbSeeder.Initialize(services);
 
             if (!app.Environment.IsDevelopment())
             {

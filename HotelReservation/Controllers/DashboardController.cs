@@ -18,12 +18,6 @@ namespace HotelReservation.Controllers
             _dbContext = dbContext;
         }
 
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         public IActionResult AllReservations()
         {
             var reservations = _dbContext.Reservations
