@@ -66,7 +66,7 @@ This section will guide users on how to set up and run your hotel management sys
   ```sh
   dotnet ef database update
   ```
-  #### This installation means the database is empty so there will be no Users and Rooms.
+  #### It has a seeder with rooms and admin users, Check the DbSeeder for the username and password.
   <p align="right">(<a href="#readme-top">back to top</a>)</p>
 <!-- USAGE -->
 ## Usage
